@@ -215,6 +215,8 @@
       background: linear-gradient(135deg, #facc15, #f59e0b);
       margin: 8px;
       transition: .3s ease;
+      position: relative;
+      overflow: visible;
     }
 
     button:hover {
@@ -517,34 +519,9 @@
       overflow: hidden;
     }
 
-    /* sliding strip */
     .effects-track {
       display: flex;
-      align-items: center;
-      gap: 14px;
-      will-change: transform;
-      transition: transform 650ms cubic-bezier(.2, .8, .2, 1);
-    }
-
-    /* one full-width slide */
-    .effects-slide {
-      flex: 0 0 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* pill */
-    .effects-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(250, 204, 21, .28);
-      background: rgba(0, 0, 0, .25);
-      color: #f8fafc;
-      white-space: nowrap;
-      font-size: .98rem;
+      width: 100%;
     }
 
     .fx-row p,
@@ -577,10 +554,27 @@
       pointer-events: auto;
     }
 
-    .effects-slide,
-    .effects-pill {
+    .effects-slide{
       pointer-events: auto;
-      transform: translateZ(0); /* fixes Windows hover loss */
+      transform: translateZ(0);
+    }
+
+    .effects-pill{
+      width: fit-content;        /* 👈 content decides width */
+      max-width: 900px;          /* 👈 hard cap */
+      padding: 16px 20px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      box-sizing: border-box;
+    }
+
+    .effects-slide{
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      padding: 0 18px;   /* 👈 THIS creates space */
+      box-sizing: border-box;
     }
 
     /* ================= COOL STUFF BELOW ================= */
@@ -746,6 +740,7 @@
       background: rgba(0, 0, 0, .45);
       backdrop-filter: blur(6px);
       z-index: 50;
+      pointer-events: none;
     }
 
     /* challenge stays normal */
@@ -868,7 +863,7 @@
       color: #d1d5db !important;
     }
 
-    body:not(.light) #effects .fx-title,  
+    body:not(.light) #effects .fx-title,
     body:not(.light) #effects h2 {
       color: #c084fc !important;
       text-shadow: none !important;
@@ -976,42 +971,6 @@ button{ position:relative; overflow:hidden; }
 .fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
 body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
 
-/* ===== TIMER PROGRESS RING ===== */
-.timer-wrap {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 20px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.progress-ring {
-  position: absolute;
-  transform: rotate(-90deg);
-}
-
-.ring-bg {
-  fill: none;
-  stroke: rgba(255,255,255,.08);
-  stroke-width: 10;
-}
-
-.ring-progress {
-  fill: none;
-  stroke: #facc15;
-  stroke-width: 10;
-  stroke-linecap: round;
-  stroke-dasharray: 597;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1s linear;
-}
-
-body.light .ring-progress {
-  stroke: #2563eb;
-}
-
   </style>
 </head>
 
@@ -1064,6 +1023,10 @@ body.light .ring-progress {
       <div class="effects-bar glow-hover" aria-label="Effects slider">
         <div class="effects-viewport">
           <div class="effects-track" id="effectsTrack">
+            <div class="effects-slide clone">
+              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
+                becomes 1 hour</span>
+            </div>
             <div class="effects-slide">
               <span class="effects-pill glow-hover glow-soft">
 <span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
@@ -1080,16 +1043,21 @@ body.light .ring-progress {
                 overload makes you feel drained</span>
             </div>
             <div class="effects-slide">
-              <span class="effects-pill"><span class="effects-icon">📉</span><strong>Motivation drop</strong> — quick
+              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">📉</span><strong>Motivation drop</strong> — quick
                 dopamine makes work feel “boring”</span>
             </div>
             <div class="effects-slide">
-              <span class="effects-pill"><span class="effects-icon">😵</span><strong>Anxiety</strong> — nonstop
+              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">😵</span><strong>Anxiety</strong> — nonstop
                 stimulation increases restlessness</span>
             </div>
             <div class="effects-slide">
-              <span class="effects-pill"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
+              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
                 becomes 1 hour</span>
+            </div>
+            <div class="effects-slide clone">
+              <span class="effects-pill glow-hover glow-soft">
+<span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
+                switching kills deep work</span>
             </div>
           </div>
         </div>
@@ -1227,12 +1195,86 @@ Reset</button> <!-- ✅ ADD -->
       window.scrollTo(0, 0);
     });
 
+    // ===== DOM REFERENCES (FIX) =====
+    const acceptBtn = document.getElementById("acceptBtn");
+    const controls = document.getElementById("controls");
+    const timer = document.getElementById("timer");
+    const statusMsg = document.getElementById("statusMsg");
+    const stopCount = document.getElementById("stopCount");
+    const currentStreak = document.getElementById("currentStreak");
+    const bestStreak = document.getElementById("bestStreak");
+    const resetStreakBtn = document.getElementById("resetStreakBtn");
+    const clearBadgesBtn = document.getElementById("clearBadgesBtn");
+
     document.querySelectorAll("button").forEach(btn => {
       btn.addEventListener("click", () => {
         clickSound.currentTime = 0;
         clickSound.play();
       });
     });
+
+    const track = document.querySelector(".effects-track");
+    const slides = track.children;
+    const realCount = slides.length - 2; // exclude clones
+
+    let index = 1; // 👈 start on first REAL slide
+    const speed = 1100;
+    const dwell = 3500;
+
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    const dotsWrap = document.getElementById("effectsDots");
+    const realSlides = document.querySelectorAll(".effects-slide:not(.clone)").length;
+
+    // CREATE DOTS
+    for (let i = 0; i < realSlides; i++) {
+      const dot = document.createElement("button");
+      dot.classList.add("effects-dot");
+      dot.addEventListener("click", () => go(i, true));
+      dotsWrap.appendChild(dot);
+    }
+
+    // SET ACTIVE DOT
+    function setActiveDot() {
+      const dots = document.querySelectorAll(".effects-dot");
+      const realIndex = (index - 1 + realSlides) % realSlides;
+      dots.forEach((d, i) => d.classList.toggle("active", i === realIndex));
+    }
+
+    // MOVE SLIDER
+    function go(i, user = false) {
+      index = i + 1;
+      track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      setActiveDot();
+      if (user) restart();
+    }
+
+    // AUTOPLAY
+    function next() {
+      index++;
+      track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      setActiveDot();
+
+      if (index === realSlides + 1) {
+        setTimeout(() => {
+          track.style.transition = "none";
+          index = 1;
+          track.style.transform = `translateX(-${index * 100}%)`;
+        }, speed);
+      }
+    }
+
+    let sliderInterval = null;
+
+    function restart() {
+      clearInterval(sliderInterval);
+      sliderInterval = setInterval(next, dwell);
+    }
+
+    setActiveDot();
+    sliderInterval = setInterval(next, dwell);
 
     /* BACK TO TOP */
     const topBtn = document.getElementById("topBtn");
@@ -1625,107 +1667,21 @@ Reset</button> <!-- ✅ ADD -->
       if (t3 && d3) { t3.textContent = c.t; d3.textContent = c.d; }
     }
 
-    /* ================= EFFECTS SNAP SLIDER (AUTO + DOTS + HOVER PAUSE) ================= */
-    (function initEffectsSlider() {
-      const track = document.getElementById("effectsTrack");
-      const dotsWrap = document.getElementById("effectsDots");
-      if (!track || !dotsWrap) return;
-
-      const slides = Array.from(track.children);
-      const total = slides.length;
-
-      let index = 0;
-      let timer = null;
-
-      const dwell = 2200; // how long each slide stays
-      const speed = 650;  // must match CSS transition time
-
-      // build dots
-      slides.forEach((_, i) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.addEventListener("click", () => { go(i, true); });
-        dotsWrap.appendChild(b);
-      });
-
-      function setActiveDot() {
-        Array.from(dotsWrap.children).forEach((d, i) => {
-          d.classList.toggle("active", i === index);
-        });
-      }
-
-      function go(i, user = false) {
-        index = (i + total) % total;
-        track.style.transitionDuration = speed + "ms";
-        track.style.transform = `translateX(-${index * 100}%)`;
-        setActiveDot();
-        if (user) restart();
-      }
-
-      function next() {
-        if (index === total - 1) {
-          go(total - 1);
-          setTimeout(() => {
-            track.style.transitionDuration = "0ms";
-            index = 0;
-            track.style.transform = `translateX(0%)`;
-            setActiveDot();
-          }, speed + 40);
-        } else {
-          go(index + 1);
-        }
-      }
-
-      function start() {
-        if (timer) clearInterval(timer);
-        timer = setInterval(next, dwell);
-      }
-      function stop() { clearInterval(timer); timer = null; }
-      function restart() { stop(); start(); }
-
-      // pause on hover
-      const viewport = track.closest(".effects-viewport");
-
-      if (viewport) {
-        viewport.addEventListener("mouseenter", stop);
-
-        // ⏸ pause while hovering
-        viewport.addEventListener("mouseleave", () => {
-          setTimeout(start, 200); // 👈 OPTIONAL delay goes HERE
-        });
-      }
-
-      setActiveDot();
-      start();
-    })();
     function goTo1() {
-      window.location.href = "https://aathipro-web.github.io/info/";
+      const sound = document.getElementById("clickSound");
+      sound.currentTime = 0;
+      sound.play().catch(()=>{});
+
+      setTimeout(() => {
+        window.location.href = "https://aathipro-web.github.io/Digital-Detox-updating/";
+      }, 180);   // small delay so sound plays
     }
-
-/* apply to ALL buttons */
-document.querySelectorAll("button").forEach(btn=>{
-  btn.addEventListener("click", playClick);
-});
-
-/* ================= BUTTON CLICK SOUND ================= */
-document.querySelectorAll("button").forEach(b =>
-  b.onclick = () => (clickSound.currentTime = 0, clickSound.play())
-);
-
-const circle = document.querySelector(".ring-progress");
-  const total = 3600;
-  const progress = (time / total);
-  const circumference = 2 * Math.PI * 95;
-
-  circle.style.strokeDashoffset =
-    circumference - (progress * circumference);
 
   </script>
 
 <audio id="clickSound" preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
 </audio>
-
 
 </body>
 
