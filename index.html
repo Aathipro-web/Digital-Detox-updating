@@ -321,9 +321,10 @@
     }
 
     .badge-slot.unlocked {
+      filter: none !important;
       background: radial-gradient(circle at top, #fff3b0, #facc15, #b45309);
       border: 3px solid gold;
-      color: #000;
+      color: #000 !important;
       box-shadow: 0 0 15px rgba(250, 204, 21, .8);
       animation: pop .4s ease;
     }
@@ -1152,12 +1153,12 @@ Reset</button> <!-- ✅ ADD -->
       </div>
 
 
-      <div class="stop-box">⏸️ Stops: <span id="stopCount">0</span></div>
+      <div class="stop-box glow-hover">⏸️ Stops: <span id="stopCount">0</span></div>
 
-      <div class="streak-box">
+      <div class="streak-box glow-hover">
         🔥 Current Streak: <span id="currentStreak">0</span><br>
         🏆 Best Streak: <span id="bestStreak">0</span><br>
-        <button id="resetStreakBtn">Reset Streak</button>
+        <button type="button" id="resetStreakBtn" class="glow-hover">Reset Streak</button>
       </div>
 
       <div class="badge-tray glow-hover">
@@ -1171,7 +1172,7 @@ Reset</button> <!-- ✅ ADD -->
           <div class="badge-slot" data-badge="7">🏅</div>
           <div class="badge-slot" data-badge="14">👑</div>
         </div>
-        <button id="clearBadgesBtn">Clear Badges</button>
+        <button id="clearBadgesBtn" class="glow-hover">Clear Badges</button>
       </div>
     </div>
   </section>
@@ -1306,7 +1307,7 @@ Reset</button> <!-- ✅ ADD -->
       toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 
-    let time = 3600, interval = null, running = false;
+    let time = 1, interval = null, running = false;
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
 
@@ -1321,7 +1322,7 @@ Reset</button> <!-- ✅ ADD -->
 
     let focusBroken = false;
     function distractionDetected(reason) {
-      if (!running && !document.body.classList.contains("focus-mode")) return;
+      if (!running) return;
 
       pauseTimer(`🚫 ${reason}`, true);
 
@@ -1408,10 +1409,34 @@ Reset</button> <!-- ✅ ADD -->
         if (time <= 0) {
           clearInterval(interval);
           running = false;
+
           unlockBadge("complete");
           if (stopCounter === 0) unlockBadge("nostop");
           updateStreak();
+
           statusMsg.innerText = "✅ Challenge completed!";
+
+          const confetti = document.getElementById("confettiSound");
+          if (confetti) {
+            confetti.currentTime = 0;
+            confetti.play().catch(() => {});
+          }
+
+          document.body.classList.remove("focus-mode");
+          document.exitFullscreen?.();
+
+          // wait for layout to settle
+          setTimeout(() => {
+            centerElementInViewport(document.getElementById("challenge"));
+          }, 200);
+
+          time = 1;
+          stopCounter = 0;
+          stopCount.innerText = "0";
+          updateTimer();
+
+          controls.style.display = "none";
+          acceptBtn.style.display = "inline-block";
         }
       }, 1000);
     }
@@ -1452,7 +1477,7 @@ Reset</button> <!-- ✅ ADD -->
 
       clearInterval(interval);
       running = false;
-      time = 3600;
+      time = 1;
       stopCounter = 0;
 
       stopCount.innerText = "0";
@@ -1532,7 +1557,11 @@ Reset</button> <!-- ✅ ADD -->
 
     function restoreBadges() {
       document.querySelectorAll(".badge-slot").forEach(b => {
-        if (earnedBadges.includes(b.dataset.badge)) b.classList.add("unlocked");
+        if (earnedBadges.includes(b.dataset.badge)) {
+          b.classList.add("unlocked");
+        } else {
+          b.classList.remove("unlocked"); // 🔥 IMPORTANT
+        }
       });
     }
     document.addEventListener("visibilitychange", () => {
@@ -1589,7 +1618,6 @@ Reset</button> <!-- ✅ ADD -->
       SafeStorage.remove("badges");
       earnedBadges.length = 0;
       restoreBadges();
-      location.reload();
     };
 
     resetStreakBtn.onclick = () => {
@@ -1599,7 +1627,6 @@ Reset</button> <!-- ✅ ADD -->
       SafeStorage.set("bestStreak", 0);
       currentStreak.innerText = 0;
       bestStreak.innerText = 0;
-      location.reload();
     };
     /* ================= SMOOTH SCROLL + WIPE ================= */
     function easeInOutCubic(t) {
@@ -1691,6 +1718,10 @@ Reset</button> <!-- ✅ ADD -->
 
 <audio id="clickSound" preload="auto">
   <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="confettiSound" preload="auto">
+  <source src="confetti-pop-sound.mp3" type="audio/mpeg">
 </audio>
 
 </body>
