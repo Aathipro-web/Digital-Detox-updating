@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -975,60 +976,6 @@ button{ position:relative; overflow:hidden; }
 .fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
 body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
 
-    /* ===== BADGE TOOLTIP POPUP ===== */
-
-.badge-slot{
-  position: relative;
-  cursor: pointer;
-}
-
-/* popup bubble */
-.badge-slot::after{
-  content: attr(data-tip);
-  position: absolute;
-
-  bottom: 120%;          /* above badge */
-  left: 50%;
-  transform: translateX(-50%) scale(.9);
-
-  background: rgba(0,0,0,.85);
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
-
-  font-size: .75rem;
-  white-space: nowrap;
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: .25s ease;
-  backdrop-filter: blur(6px);
-}
-
-/* arrow */
-.badge-slot::before{
-  content:"";
-  position:absolute;
-
-  bottom: 105%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  border:6px solid transparent;
-  border-top-color: rgba(0,0,0,.85);
-
-  opacity:0;
-  transition:.25s ease;
-}
-
-/* show on hover */
-.badge-slot:hover::after,
-.badge-slot:hover::before{
-  opacity:1;
-  transform: translateX(-50%) scale(1);
-}
-
   </style>
 </head>
 
@@ -1219,21 +1166,16 @@ Reset</button> <!-- ✅ ADD -->
       </div>
 
       <div class="badge-tray glow-hover">
-  <div class="badge-slot" data-tip="Use the site for 30 minutes straight">
-    ⏱️
-  </div>
 
-  <div class="badge-slot" data-tip="Complete the 1‑Hour Detox">
-    ✅
-  </div>
-
-  <div class="badge-slot" data-tip="Finish detox with 0 stops">
-    💎
-  </div>
-
-  <div class="badge-slot" data-tip="4‑day streak">
-    🔥
-  </div>
+        Badges
+        <div id="badgeTray">
+          <div class="badge-slot" data-badge="30">⏱️</div>
+          <div class="badge-slot" data-badge="complete">✅</div>
+          <div class="badge-slot" data-badge="nostop">💎</div>
+          <div class="badge-slot" data-badge="4">🔥</div>
+          <div class="badge-slot" data-badge="7">🏅</div>
+          <div class="badge-slot" data-badge="14">👑</div>
+        </div>
         <button id="clearBadgesBtn" class="glow-hover">Clear Badges</button>
       </div>
     </div>
