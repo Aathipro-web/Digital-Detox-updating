@@ -1186,6 +1186,10 @@ Reset</button> <!-- ✅ ADD -->
     </div>
   </div>
 
+  <audio id="alarmSound" preload="auto">
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  </audio>
+
   <script>
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -1325,7 +1329,13 @@ Reset</button> <!-- ✅ ADD -->
       const alarm = document.getElementById("alarmSound");
       if (alarm) {
         alarm.currentTime = 0;
-        alarm.play().catch(() => {});
+        alarm.play();
+
+        // Stop after 3 seconds
+        setTimeout(() => {
+            alarm.pause();
+            alarm.currentTime = 0;
+        }, 2000);
       }
 
       focusBroken = true;
