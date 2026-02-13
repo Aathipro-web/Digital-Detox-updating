@@ -1373,7 +1373,7 @@ Reset</button> <!-- ✅ ADD -->
       toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 
-    let time = 1, interval = null, running = false;
+    let time = 3600, interval = null, running = false;
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
 
@@ -1496,7 +1496,7 @@ Reset</button> <!-- ✅ ADD -->
             centerElementInViewport(document.getElementById("challenge"));
           }, 200);
 
-          time = 1;
+          time = 3600;
           stopCounter = 0;
           stopCount.innerText = "0";
           updateTimer();
@@ -1543,7 +1543,7 @@ Reset</button> <!-- ✅ ADD -->
 
       clearInterval(interval);
       running = false;
-      time = 1;
+      time = 3600;
       stopCounter = 0;
 
       stopCount.innerText = "0";
