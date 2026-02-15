@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1030,6 +1029,49 @@ body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
   transform: translateX(-50%) scale(1);
 }
 
+/* ===== BADGE UNLOCK POPUP ===== */
+
+#badgePopup{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  animation: fadeIn .3s ease;
+}
+
+.badge-popup-inner{
+  background: linear-gradient(135deg,#facc15,#f59e0b);
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(250,204,21,.7);
+  animation: popBadge .4s ease;
+}
+
+.badge-popup-inner h2{
+  margin-bottom: 10px;
+  color:#000;
+}
+
+.badge-popup-inner p{
+  color:#000;
+  font-weight:600;
+}
+
+@keyframes popBadge{
+  0%{transform:scale(.6)}
+  70%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
   </style>
 </head>
 
@@ -1373,7 +1415,8 @@ Reset</button> <!-- ✅ ADD -->
       toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 
-    let time = 3600, interval = null, running = false;
+    const totalTime = 10;
+    let time = 10, interval = null, running = false;
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
 
@@ -1471,7 +1514,7 @@ Reset</button> <!-- ✅ ADD -->
       running = true;
       interval = setInterval(() => {
         time--; updateTimer();
-        if (time === 1800) unlockBadge("30");
+        if (time === totalTime/2) unlockBadge("30");
         if (time <= 0) {
           clearInterval(interval);
           running = false;
@@ -1496,7 +1539,7 @@ Reset</button> <!-- ✅ ADD -->
             centerElementInViewport(document.getElementById("challenge"));
           }, 200);
 
-          time = 3600;
+          time = 10;
           stopCounter = 0;
           stopCount.innerText = "0";
           updateTimer();
@@ -1543,7 +1586,7 @@ Reset</button> <!-- ✅ ADD -->
 
       clearInterval(interval);
       running = false;
-      time = 3600;
+      time = 10;
       stopCounter = 0;
 
       stopCount.innerText = "0";
@@ -1615,11 +1658,65 @@ Reset</button> <!-- ✅ ADD -->
     }
 
     function unlockBadge(id) {
-      if (earnedBadges.includes(id)) return;
-      earnedBadges.push(id);
-      SafeStorage.set("badges", earnedBadges);
-      restoreBadges();
-    }
+  if (earnedBadges.includes(id)) return;
+
+  earnedBadges.push(id);
+  SafeStorage.set("badges", earnedBadges);
+  restoreBadges();
+
+  showBadgePopup(id);
+}
+
+function showBadgePopup(id){
+
+  const popup = document.getElementById("badgePopup");
+  const title = document.getElementById("badgePopupTitle");
+  const desc = document.getElementById("badgePopupDesc");
+
+  let badgeName = "";
+  let badgeReason = "";
+
+  if(id === "30"){
+    badgeName = "⏱️ 30 Minute Master";
+    badgeReason = "You completed 30 minutes of detox!";
+  }
+
+  if(id === "complete"){
+    badgeName = "✅ 1-Hour Champion";
+    badgeReason = "You completed the full 1-hour detox session!";
+  }
+
+  if(id === "nostop"){
+    badgeName = "💎 Pure Focus";
+    badgeReason = "You finished the detox without stopping!";
+  }
+
+  if(id === "4"){
+    badgeName = "🔥 4 Day Streak";
+    badgeReason = "You maintained detox for 4 sessions!";
+  }
+
+  if(id === "7"){
+    badgeName = "🏅 7 Day Discipline";
+    badgeReason = "You completed 7 sessions consecutively!";
+  }
+
+  if(id === "14"){
+    badgeName = "👑 14 Day Focus King";
+    badgeReason = "You completed 14 sessions consecutively!";
+  }
+
+  title.innerText = badgeName;
+  desc.innerText = badgeReason;
+
+  popup.style.display = "flex";
+
+  setTimeout(()=>{
+    popup.style.display = "none";
+  },3000);
+}
+
+
 
     function restoreBadges() {
       document.querySelectorAll(".badge-slot").forEach(b => {
@@ -1761,7 +1858,7 @@ Reset</button> <!-- ✅ ADD -->
       const d2 = document.getElementById("tipText2");
       const t3 = document.getElementById("tipTitle3");
       const d3 = document.getElementById("tipText3");
-
+      
       if (t1 && d1) { t1.textContent = a.t; d1.textContent = a.d; }
       if (t2 && d2) { t2.textContent = b.t; d2.textContent = b.d; }
       if (t3 && d3) { t3.textContent = c.t; d3.textContent = c.d; }
@@ -1786,6 +1883,15 @@ Reset</button> <!-- ✅ ADD -->
 <audio id="confettiSound" preload="auto">
   <source src="https://files.catbox.moe/oijr6r.mp3" type="audio/mpeg">
 </audio>
+
+<!-- BADGE POPUP -->
+<div id="badgePopup" style="display:none;">
+  <div class="badge-popup-inner">
+    <h2 id="badgePopupTitle">🏆 Badge Unlocked!</h2>
+    <p id="badgePopupDesc"></p>
+  </div>
+</div>
+
 
 </body>
 
