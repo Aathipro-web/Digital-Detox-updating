@@ -1438,6 +1438,7 @@ Reset</button> <!-- ✅ ADD -->
     const timerText = document.getElementById("timerText");
     const radius = 70;
     const circumference = 2 * Math.PI * radius;
+    
     ring.style.strokeDasharray = circumference;
     ring.style.strokeDashoffset = 0;
 
@@ -1540,6 +1541,7 @@ Reset</button> <!-- ✅ ADD -->
     const fixedTotalTime = 10;
     let totalTime = 10;
     let time = 10, interval = null, running = false;
+    
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
 
