@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -184,7 +183,7 @@
 
 
     .gold {
-      color: #facc15
+      color: #facc15 !important
     }
 
     .hero {
@@ -849,7 +848,7 @@
     body.light #effects h2,
     body.light #effects .fx-title {
       color: #1e293b;
-      text-shadow: none;
+      color: none;
     }
 
     /* remove dark edge fades ONLY in light mode */
@@ -909,7 +908,7 @@
     body:not(.light) #effects .fx-title,
     body:not(.light) #effects h2 {
       color: #c084fc !important;
-      text-shadow: none !important;
+      color: none !important;
     }
 
     body:not(.light) #effects .effects-bar {
@@ -1004,12 +1003,12 @@
 
     /* BIG TEXT GLOW (headings) */
     .glow-text{
-      text-shadow:
+      color:
         0 0 10px rgba(192,132,252,.45),
         0 0 22px var(--accent-color);
     }
     .glow-text.gold-text{
-      text-shadow:
+      color:
         0 0 10px rgba(250,204,21,.55),
         0 0 22px rgba(250,204,21,.25);
     }
@@ -1116,6 +1115,67 @@
       to{opacity:1}
     }
 
+    /* ===== TITLE GLOW ANIMATION ===== */
+    @keyframes glowShift {
+      0%   { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
+      25%  { color: 0 0 10px #6f42c1, 0 0 20px #6f42c1; }
+      50%  { color: 0 0 10px #00c9a7, 0 0 20px #00c9a7; }
+      75%  { color: 0 0 10px #ff4da6, 0 0 20px #ff4da6; }
+      100% { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
+    }
+
+    /* ===== MOVING TEXT GRADIENT ===== */
+    .hero-title {
+      font-weight: 700;
+      background: linear-gradient(
+        90deg,
+        #4da6ff,
+        #6f42c1,
+        #00c9a7,
+        #ff4da6,
+        #4da6ff
+      );
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textWave 5s linear infinite;
+    }
+
+    @keyframes textWave {
+      0% { background-position: 0%; }
+      100% { background-position: 300%; }
+    }
+
+    body.dark-mode .hero-title {
+      background: linear-gradient(
+        90deg,
+        #c183fc,
+        #ffffff,
+        #c183fc
+      );
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textWave 5s linear infinite;
+    }
+
+    /* ===== CURSOR GLOW ===== */
+    .cursor-glow {
+      position: fixed;
+      width: 150px;
+      height: 150px;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(77,166,255,0.4) 0%, rgba(77,166,255,0.1) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: background 0.3s ease;
+      z-index: 9999;
+    }
+
+    body.dark-mode .cursor-glow {
+      background: radial-gradient(circle, rgba(193,131,252,0.4) 0%, rgba(193,131,252,0.1) 40%, transparent 70%);
+    }
+
   </style>
 </head>
 
@@ -1127,7 +1187,7 @@
   <button id="themeToggle" class="theme-toggle">🌙</button>
 
   <section class="hero">
-    <h1 class="glow-text">Break Free from <span class="gold">Digital Addiction</span></h1>
+    <h1 class="glow-text hero-title">Break Free from <span class = "gold">Digital Addiction</span></h1>
     <p>An interactive awareness & self-discipline platform.</p>
     <button onclick="scrollElementFullyIntoView(
   document.querySelector('.fx-actions'),
@@ -1158,6 +1218,8 @@
       </div>
     </div>
   </section>
+
+  <div class="cursor-glow"></div>
 
   <section id="effects">
     <div class="effects-area">
@@ -1327,7 +1389,7 @@ Reset</button> <!-- ✅ ADD -->
 
 <div class="badge-slot" data-badge="nostop" data-tip="Complete detox with zero stops">💎</div>
 
-<div class="badge-slot" data-badge="4" data-tip="Maintain a 4‑day detox times">🔥</div>
+<div class="badge-slot" data-badge="4" data-tip="Complete detox for 4 consecutive times">🔥</div>
 
 <!-- NEW ONES 👇 -->
 <div class="badge-slot" data-badge="7" data-tip="Complete detox for 7 consecutive times">🏅</div>
@@ -1839,7 +1901,7 @@ function showBadgePopup(id){
 
   if(id === "4"){
     badgeName = "🔥 4 Day Streak";
-    badgeReason = "You maintained detox for 4 sessions!";
+    badgeReason = "You completed 4 sessions consecutively!";
   }
 
   if(id === "7"){
@@ -2019,6 +2081,13 @@ function showBadgePopup(id){
         window.location.href = "https://aathipro-web.github.io/info/";
       }, 180);   // small delay so sound plays
     }
+
+    const glow = document.querySelector(".cursor-glow");
+
+    document.addEventListener("mousemove", (e) => {
+      glow.style.left = e.clientX + "px";
+      glow.style.top = e.clientY + "px";
+    });
 
   </script>
 
