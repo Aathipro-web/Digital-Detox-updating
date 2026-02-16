@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -270,14 +271,52 @@
       border-radius: 20px;
     }
 
-    #timer {
-      font-size: 3rem;
-      color: #ed72f8;
-      margin: 30px auto 10px;
-      padding: 20px 40px;
-      border: 3px solid #e7a0f9;
-      border-radius: 20px;
-      display: inline-block;
+    /* ===== PROGRESS RING TIMER ===== */
+
+    /* ===== CENTER BUTTON + TIMER PROPERLY ===== */
+
+    .challenge-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin: 30px auto;
+      width: fit-content;   /* IMPORTANT */
+    }
+
+    .progress-ring {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progress-ring svg {
+      transform: rotate(90deg);
+    }
+
+    .ring-bg {
+      stroke: rgba(255,255,255,0.1);
+    }
+
+    .ring-progress {
+      stroke: var(--accent-color);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s linear;
+      transform: scaleX(-1);      /* 👈 THIS reverses direction */
+      transform-origin: center;
+    }
+
+    #timerText {
+      position: absolute;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      line-height: 1;
+      text-align: center;
+      pointer-events: none;
     }
 
     .controls {
@@ -898,179 +937,184 @@
       color: #facc15 !important;
     }
     .penalty-warning{
-  margin-top: 12px;
-  padding: 10px 16px;
-  border-radius: 12px;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 12px;
 
-  background: rgba(220, 38, 38, .15);
-  border: 1px solid rgba(220, 38, 38, .6);
-  color: #fecaca;
+      background: rgba(220, 38, 38, .15);
+      border: 1px solid rgba(220, 38, 38, .6);
+      color: #fecaca;
 
-  font-weight: 700;
-  animation: pulseWarn .6s ease;
-}
+      font-weight: 700;
+      animation: pulseWarn .6s ease;
+    }
 
-@keyframes pulseWarn{
-  0%{ transform: scale(.95); opacity: .6; }
-  60%{ transform: scale(1.05); opacity: 1; }
-  100%{ transform: scale(1); }
-}
+    @keyframes pulseWarn{
+      0%{ transform: scale(.95); opacity: .6; }
+      60%{ transform: scale(1.05); opacity: 1; }
+      100%{ transform: scale(1); }
+    }
 
-#challenge {
-  scroll-margin-top: 15vh;
-  scroll-margin-bottom: 15vh;
-}
+    #challenge {
+      scroll-margin-top: 15vh;
+      scroll-margin-bottom: 15vh;
+    }
 
-/* ====== CLEAN PREMIUM HOVER GLOW (PASTE LAST) ====== */
-:root{
-  --glow-yellow: rgba(250,204,21,.55);
-  --glow-purple: rgba(192,132,252,.55);
-  --glow-blue:   rgba(59,130,246,.55);
-}
+    /* ====== CLEAN PREMIUM HOVER GLOW (PASTE LAST) ====== */
+    :root{
+      --glow-yellow: rgba(250,204,21,.55);
+      --glow-purple: rgba(192,132,252,.55);
+      --glow-blue:   var(--accent-color);
+      --accent-color: #3b82f6;
+    }
 
-/* make pseudo-elements behave correctly on buttons */
-button{ position:relative; overflow:hidden; }
+    body:not(.light) {
+      --accent-color: #c183fc;   /* purple for dark mode */
+    }
 
-/* reusable glow hover class */
-.glow-hover{
-  position: relative;
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-.glow-hover::after{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius: inherit;
-  background: linear-gradient(120deg, var(--glow-yellow), var(--glow-purple), var(--glow-blue));
-  filter: blur(12px);     /* <- glow softness */
-  opacity: 0;
-  z-index: -1;
-  transition: opacity .25s ease, filter .25s ease;
-}
-.glow-hover:hover{
-  transform: translateY(-4px);
-  box-shadow:
-    0 18px 55px rgba(0,0,0,.55),
-    0 0 26px rgba(192,132,252,.25);
-}
-.glow-hover:hover::after{
-  opacity: .95;
-  filter: blur(16px);
-}
+    /* make pseudo-elements behave correctly on buttons */
+    button{ position:relative; overflow:hidden; }
 
-/* BIG TEXT GLOW (headings) */
-.glow-text{
-  text-shadow:
-    0 0 10px rgba(192,132,252,.45),
-    0 0 22px rgba(59,130,246,.28);
-}
-.glow-text.gold-text{
-  text-shadow:
-    0 0 10px rgba(250,204,21,.55),
-    0 0 22px rgba(250,204,21,.25);
-}
+    /* reusable glow hover class */
+    .glow-hover{
+      position: relative;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .glow-hover::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: inherit;
+      background: linear-gradient(120deg, var(--glow-yellow), var(--glow-purple), var(--glow-blue));
+      filter: blur(12px);     /* <- glow softness */
+      opacity: 0;
+      z-index: -1;
+      transition: opacity .25s ease, filter .25s ease;
+    }
+    .glow-hover:hover{
+      transform: translateY(-4px);
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.55),
+        0 0 26px rgba(192,132,252,.25);
+    }
+    .glow-hover:hover::after{
+      opacity: .95;
+      filter: blur(16px);
+    }
 
-/* ====== REDUCE BLUR (your ask) ====== */
-.effects-bar{ backdrop-filter: blur(3px) !important; } /* was 6px */
-.fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
-body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
+    /* BIG TEXT GLOW (headings) */
+    .glow-text{
+      text-shadow:
+        0 0 10px rgba(192,132,252,.45),
+        0 0 22px var(--accent-color);
+    }
+    .glow-text.gold-text{
+      text-shadow:
+        0 0 10px rgba(250,204,21,.55),
+        0 0 22px rgba(250,204,21,.25);
+    }
 
-    /* ===== BADGE TOOLTIP POPUP ===== */
+    /* ====== REDUCE BLUR (your ask) ====== */
+    .effects-bar{ backdrop-filter: blur(3px) !important; } /* was 6px */
+    .fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
+    body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
 
-.badge-slot{
-  position: relative;
-  cursor: pointer;
-}
+        /* ===== BADGE TOOLTIP POPUP ===== */
 
-/* popup bubble */
-.badge-slot::after{
-  content: attr(data-tip);
-  position: absolute;
+    .badge-slot{
+      position: relative;
+      cursor: pointer;
+    }
 
-  bottom: 120%;          /* above badge */
-  left: 50%;
-  transform: translateX(-50%) scale(.9);
+    /* popup bubble */
+    .badge-slot::after{
+      content: attr(data-tip);
+      position: absolute;
 
-  background: rgba(0,0,0,.85);
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
+      bottom: 120%;          /* above badge */
+      left: 50%;
+      transform: translateX(-50%) scale(.9);
 
-  font-size: .75rem;
-  white-space: nowrap;
+      background: rgba(0,0,0,.85);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
 
-  opacity: 0;
-  pointer-events: none;
+      font-size: .75rem;
+      white-space: nowrap;
 
-  transition: .25s ease;
-  backdrop-filter: blur(6px);
-}
+      opacity: 0;
+      pointer-events: none;
 
-/* arrow */
-.badge-slot::before{
-  content:"";
-  position:absolute;
+      transition: .25s ease;
+      backdrop-filter: blur(6px);
+    }
 
-  bottom: 105%;
-  left: 50%;
-  transform: translateX(-50%);
+    /* arrow */
+    .badge-slot::before{
+      content:"";
+      position:absolute;
 
-  border:6px solid transparent;
-  border-top-color: rgba(0,0,0,.85);
+      bottom: 105%;
+      left: 50%;
+      transform: translateX(-50%);
 
-  opacity:0;
-  transition:.25s ease;
-}
+      border:6px solid transparent;
+      border-top-color: rgba(0,0,0,.85);
 
-/* show on hover */
-.badge-slot:hover::after,
-.badge-slot:hover::before{
-  opacity:1;
-  transform: translateX(-50%) scale(1);
-}
+      opacity:0;
+      transition:.25s ease;
+    }
 
-/* ===== BADGE UNLOCK POPUP ===== */
+    /* show on hover */
+    .badge-slot:hover::after,
+    .badge-slot:hover::before{
+      opacity:1;
+      transform: translateX(-50%) scale(1);
+    }
 
-#badgePopup{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20000;
-  animation: fadeIn .3s ease;
-}
+    /* ===== BADGE UNLOCK POPUP ===== */
 
-.badge-popup-inner{
-  background: linear-gradient(135deg,#facc15,#f59e0b);
-  padding: 30px 40px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 0 40px rgba(250,204,21,.7);
-  animation: popBadge .4s ease;
-}
+    #badgePopup{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20000;
+      animation: fadeIn .3s ease;
+    }
 
-.badge-popup-inner h2{
-  margin-bottom: 10px;
-  color:#000;
-}
+    .badge-popup-inner{
+      background: linear-gradient(135deg,#facc15,#f59e0b);
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(250,204,21,.7);
+      animation: popBadge .4s ease;
+    }
 
-.badge-popup-inner p{
-  color:#000;
-  font-weight:600;
-}
+    .badge-popup-inner h2{
+      margin-bottom: 10px;
+      color:#000;
+    }
 
-@keyframes popBadge{
-  0%{transform:scale(.6)}
-  70%{transform:scale(1.1)}
-  100%{transform:scale(1)}
-}
+    .badge-popup-inner p{
+      color:#000;
+      font-weight:600;
+    }
 
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
+    @keyframes popBadge{
+      0%{transform:scale(.6)}
+      70%{transform:scale(1.1)}
+      100%{transform:scale(1)}
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0}
+      to{opacity:1}
+    }
 
   </style>
 </head>
@@ -1237,10 +1281,20 @@ body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
 
       <h2>1-Hour Digital Detox</h2>
 
-      <button id="acceptBtn" class="glow-hover glow-soft" onclick="acceptChallenge()">
-Accept Challenge</button>
+      <div class="challenge-top">
+        <button id="acceptBtn" onclick="acceptChallenge()">
+          Accept Challenge
+        </button>
+      
+        <div class="progress-ring">
+          <svg width="170" height="170">
+            <circle class="ring-bg" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
+            <circle class="ring-progress" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
+          </svg>
+          <div id="timerText">60:00</div>
+        </div>
+      </div>
 
-      <div id="timer">60:00</div>
       <div id="statusMsg"></div>
 
       <div class="controls" id="controls">
@@ -1318,6 +1372,12 @@ Reset</button> <!-- ✅ ADD -->
     const bestStreak = document.getElementById("bestStreak");
     const resetStreakBtn = document.getElementById("resetStreakBtn");
     const clearBadgesBtn = document.getElementById("clearBadgesBtn");
+    const ring = document.querySelector(".ring-progress");
+    const timerText = document.getElementById("timerText");
+    const radius = 70;
+    const circumference = 2 * Math.PI * radius;
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = 0;
 
     document.querySelectorAll("button").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -1415,7 +1475,8 @@ Reset</button> <!-- ✅ ADD -->
       toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 
-    const totalTime = 10;
+    const fixedTotalTime = 10;
+    let totalTime = 10;
     let time = 10, interval = null, running = false;
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
@@ -1429,24 +1490,45 @@ Reset</button> <!-- ✅ ADD -->
     bestStreak.innerText = bestStreakVal;
     updateTimer(); restoreBadges();
 
+    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let currentSource = null;
+
+    async function repeatingFunction(url) {
+      // If a sound is already playing, stop it first
+      if (currentSource) {
+        currentSource.stop();
+      }
+
+      // Fetch and decode the audio file
+      const response = await fetch(url);
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+      // Create and configure the buffer source
+      const source = audioCtx.createBufferSource();
+      source.buffer = audioBuffer;
+
+      source.loopStart = 0.57;
+      source.loopEnd = 2.07;
+      source.loop = true; // This property is key for seamless 1-sec loops
+
+      // Connect to speakers and start
+      source.connect(audioCtx.destination);
+      source.start(0);
+
+      // Store reference so we can stop it later
+      currentSource = source;
+    }
+
     let focusBroken = false;
     function distractionDetected(reason) {
       if (!running) return;
 
       pauseTimer(`🚫 ${reason}`, true);
+      document
 
       // 🔔 alarm
       const alarm = document.getElementById("alarmSound");
-      if (alarm) {
-        alarm.currentTime = 0;
-        alarm.play();
-
-        // Stop after 3 seconds
-        setTimeout(() => {
-            alarm.pause();
-            alarm.currentTime = 0;
-        }, 2000);
-      }
 
       focusBroken = true;
       document.body.classList.remove("focus-mode");
@@ -1457,6 +1539,10 @@ Reset</button> <!-- ✅ ADD -->
         "⛔ +1 minute penalty applied. Click resume to continue.";
 
       document.getElementById("focusBlock").style.display = "flex";
+
+      // const stopAlarmBtn = document.getElementById()
+
+      repeatingFunction('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg')
 
       // 👁️ ensure challenge is visible
       setTimeout(() => {
@@ -1508,13 +1594,15 @@ Reset</button> <!-- ✅ ADD -->
       else if (el.msRequestFullscreen) el.msRequestFullscreen();
     }
 
-
+    let timeTrue = true;
     function startTimer() {
       if (running) return;
       running = true;
       interval = setInterval(() => {
         time--; updateTimer();
-        if (time === totalTime/2) unlockBadge("30");
+        if (time+fixedTotalTime/2 <= totalTime){
+          unlockBadge("30");
+        };
         if (time <= 0) {
           clearInterval(interval);
           running = false;
@@ -1562,6 +1650,7 @@ Reset</button> <!-- ✅ ADD -->
 
         // ⛔ penalty: add 60 seconds
         time += 60;
+        totalTime += 60;
       }
 
       statusMsg.innerText = msg + " (+1 min penalty)";
@@ -1583,6 +1672,7 @@ Reset</button> <!-- ✅ ADD -->
 
     function resetTimer() {
       intentionalFullscreenExit = true;
+      totalTime = 10;
 
       clearInterval(interval);
       running = false;
@@ -1605,6 +1695,11 @@ Reset</button> <!-- ✅ ADD -->
 
 
     function resumeTimer() {
+      if (currentSource) {
+        currentSource.stop();
+        currentSource = null;
+      }
+      
       if (running) return;
 
       // hide warning box
@@ -1641,10 +1736,44 @@ Reset</button> <!-- ✅ ADD -->
       intentionalFullscreenExit = false;
     });
 
+    // Disable right click during focus mode
+    document.addEventListener("contextmenu", function (e) {
+      if (document.body.classList.contains("focus-mode")) {
+        e.preventDefault();
+        distractionDetected("Right click blocked");
+      }
+    });
 
+    document.addEventListener("keydown", function (e) {
+      if (!document.body.classList.contains("focus-mode")) return;
+
+      const key = e.key.toLowerCase();
+
+      // Block most dangerous combos
+      if (
+        e.ctrlKey ||
+        e.metaKey ||      // Mac Command key
+        key === "f12" ||
+        key === "escape"
+      ) {
+        e.preventDefault();
+        distractionDetected("Shortcut blocked");
+      }
+    });
 
     function updateTimer() {
-      timer.innerText = `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+
+      timerText.innerText =
+        `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+
+      const progress = time / totalTime;
+
+      // EMPTY effect (reverse drain)
+      const offset = circumference * (1 - progress);
+
+      ring.style.strokeDashoffset = offset;
     }
 
     function updateStreak() {
@@ -1655,6 +1784,16 @@ Reset</button> <!-- ✅ ADD -->
       currentStreak.innerText = currentStreakVal;
       bestStreak.innerText = bestStreakVal;
       if ([4, 7, 14].includes(currentStreakVal)) unlockBadge(String(currentStreakVal));
+      if(currentStreakVal > 4){unlockBadgeAlone('4');};
+      if(currentStreakVal > 7){unlockBadgeAlone('7');};
+      if(currentStreakVal > 14){unlockBadgeAlone('14');};
+    }
+
+    function unlockBadgeAlone(id){
+      if (earnedBadges.includes(id)) return;
+      earnedBadges.push(id);
+      SafeStorage.set("badges", earnedBadges);
+      restoreBadges();
     }
 
     function unlockBadge(id) {
@@ -1676,8 +1815,15 @@ function showBadgePopup(id){
   let badgeName = "";
   let badgeReason = "";
 
+  timeTrue = true;
   if(id === "30"){
     badgeName = "⏱️ 30 Minute Master";
+    const confetti = document.getElementById("confettiSound");
+    if (timeTrue && confetti) {
+      confetti.currentTime = 0;
+      confetti.play().catch(() => {});
+      timeTrue = false;
+    };
     badgeReason = "You completed 30 minutes of detox!";
   }
 
