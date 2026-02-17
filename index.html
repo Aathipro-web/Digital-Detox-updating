@@ -1188,7 +1188,7 @@
   <button id="themeToggle" class="theme-toggle">🌙</button>
 
   <section class="hero">
-    <h1 class="glow-text hero-title">Break Away from <span class = "gold">Digital Addiction</span></h1>
+    <h1 class="glow-text hero-title">Break Free from <span class = "gold">Digital Addiction</span></h1>
     <p>An interactive awareness & self-discipline platform.</p>
     <button onclick="scrollElementFullyIntoView(
   document.querySelector('.fx-actions'),
@@ -1439,7 +1439,6 @@ Reset</button> <!-- ✅ ADD -->
     const timerText = document.getElementById("timerText");
     const radius = 70;
     const circumference = 2 * Math.PI * radius;
-    
     ring.style.strokeDasharray = circumference;
     ring.style.strokeDashoffset = 0;
 
@@ -1539,10 +1538,9 @@ Reset</button> <!-- ✅ ADD -->
       toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 
-    const fixedTotalTime = 3600;
-    let totalTime = 3600;
-    let time = 3600, interval = null, running = false;
-    
+    const fixedTotalTime = 10;
+    let totalTime = 10;
+    let time = 10, interval = null, running = false;
     let stopCounter = 0;
     let intentionalFullscreenExit = false;
 
@@ -1692,7 +1690,7 @@ Reset</button> <!-- ✅ ADD -->
             centerElementInViewport(document.getElementById("challenge"));
           }, 200);
 
-          time = 3600;
+          time = 10;
           stopCounter = 0;
           stopCount.innerText = "0";
           updateTimer();
@@ -1737,11 +1735,11 @@ Reset</button> <!-- ✅ ADD -->
 
     function resetTimer() {
       intentionalFullscreenExit = true;
-      totalTime = 3600;
+      totalTime = 10;
 
       clearInterval(interval);
       running = false;
-      time = 3600;
+      time = 10;
       stopCounter = 0;
 
       stopCount.innerText = "0";
@@ -2109,7 +2107,6 @@ function showBadgePopup(id){
     <p id="badgePopupDesc"></p>
   </div>
 </div>
-
 
 </body>
 
