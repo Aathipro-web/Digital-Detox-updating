@@ -1,2113 +1,2167 @@
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Digital Addiction Awareness</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!DOCTYPE html>
+  <html lang="en">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8">
+    <title>Digital Addiction Awareness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* BACK TO TOP */
-    #topBtn {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-      width: 46px;
-      height: 46px;
+    <style>
+      /* BACK TO TOP */
+      #topBtn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
 
-      display: grid;
-      place-items: center;
+        width: 46px;
+        height: 46px;
 
-      padding: 0;
-      line-height: 1;
+        display: grid;
+        place-items: center;
 
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7c3aed, #c084fc);
-      border: 2px solid #c084fc;
+        padding: 0;
+        line-height: 1;
 
-      color: #ffffff;
-      font-size: 1.3rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7c3aed, #c084fc);
+        border: 2px solid #c084fc;
 
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: .35s ease;
-      z-index: 999;
-    }
+        color: #ffffff;
+        font-size: 1.3rem;
 
-    #topBtn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px rgba(192, 132, 252, .8);
-    }
-
-    #topBtn.show {
-      opacity: 1;
-      pointer-events: auto
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background: radial-gradient(circle at top, #2a003f, #000);
-      color: rgb(212, 0, 255);
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 15px;
-      right: 20px;
-      background: linear-gradient(135deg, #facc15, #d4af37);
-      color: #000;
-      border: none;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(250, 204, 21, .6);
-      transition: 0.3s ease;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      line-height: 1;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1)
-    }
-
-    /* ================= LIGHT MODE (FIXED) ================= */
-
-    body.light {
-      background: #eef2ff;
-      color: #0f172a;
-    }
-
-    /* headings */
-    body.light h1,
-    body.light h2,
-    body.light h3 {
-      color: #1e3a8a;
-    }
-
-    /* sections */
-    body.light section {
-      background: transparent;
-    }
-
-    /* cards */
-    body.light .card {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
-    }
-
-    /* hero text */
-    body.light .hero p {
-      color: #334155;
-    }
-
-    /* buttons */
-    body.light button {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, .35);
-    }
-
-    body.light button:hover {
-      box-shadow: 0 15px 35px rgba(37, 99, 235, .45);
-    }
-
-    /* timer */
-    body.light #timer {
-      color: #1e40af;
-      border-color: #93c5fd;
-      background: #eff6ff;
-    }
-
-    /* boxes */
-    body.light .stop-box,
-    body.light .streak-box,
-    body.light .badge-tray {
-      background: #f8fafc;
-      border-color: #93c5fd;
-    }
-
-    /* badge slots */
-    body.light .badge-slot {
-      color: #94a3b8;
-    }
-
-    /* footer */
-    body.light footer {
-      background: #e5edff;
-      color: #334155;
-    }
-
-
-    section {
-      padding: 80px 10%
-    }
-
-    h1,
-    h2,
-    h3 {
-      color: #c084fc
-    }
-
-    body.light h1,
-    body.light h2,
-    body.light h3 {
-      color: #1e3a8a;
-    }
-
-    /* ================= BADGES – LIGHT MODE INACTIVE ================= */
-
-    body.light .badge-slot:not(.unlocked) {
-      background: #f1f5f9;
-      color: #94a3b8;
-      box-shadow: none;
-      filter: grayscale(1);
-      opacity: .85;
-    }
-
-
-    .gold {
-      color: #facc15 !important
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px
-    }
-
-    .hero p {
-      max-width: 700px;
-      margin-bottom: 30px;
-      color: #ce09ff
-    }
-
-    button {
-      padding: 14px 30px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      margin: 8px;
-      transition: .3s ease;
-      position: relative;
-      overflow: visible;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(250, 204, 21, .8);
-    }
-
-    .stop-btn {
-      background: #000;
-      color: yellow;
-      border: 2px solid #797979;
-    }
-
-    .card {
-      background: rgba(0, 0, 0, .8);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, .8);
-      animation: fadeUp 1s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
+        cursor: pointer;
         opacity: 0;
-        transform: translateY(30px)
+        pointer-events: none;
+        transition: .35s ease;
+        z-index: 999;
       }
 
-      to {
+      #topBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(192, 132, 252, .8);
+      }
+
+      #topBtn.show {
         opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .image-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
-      align-items: center;
-    }
-
-    .image-section img {
-      width: 100%;
-      border-radius: 20px;
-    }
-
-    /* ===== PROGRESS RING TIMER ===== */
-
-    /* ===== CENTER BUTTON + TIMER PROPERLY ===== */
-
-    .challenge-top {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      margin: 30px auto;
-      width: fit-content;   /* IMPORTANT */
-    }
-
-    .progress-ring {
-      position: relative;
-      width: 170px;
-      height: 170px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .progress-ring svg {
-      transform: rotate(90deg);
-    }
-
-    .ring-bg {
-      stroke: rgba(255,255,255,0.1);
-    }
-
-    .ring-progress {
-      stroke: var(--accent-color);
-      stroke-linecap: round;
-      transition: stroke-dashoffset 1s linear;
-      transform: scaleX(-1);      /* 👈 THIS reverses direction */
-      transform-origin: center;
-    }
-
-    #timerText {
-      position: absolute;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent-color);
-      line-height: 1;
-      text-align: center;
-      pointer-events: none;
-    }
-
-    .controls {
-      display: none;
-      margin-top: 20px
-    }
-
-    #statusMsg {
-      margin-top: 10px;
-      color: #60a5fa
-    }
-
-    .stop-box,
-    .streak-box,
-    .badge-tray {
-      margin-top: 25px;
-      padding: 15px;
-      border: 1px solid #facc15;
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    #badgeTray{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 20px;
-      justify-items: center;
-      align-items: center;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-
-    .badge-slot {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px dashed rgba(250, 204, 21, .5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: rgba(250, 204, 21, .3);
-      filter: grayscale(1);
-    }
-
-    .badge-slot.unlocked {
-      filter: none !important;
-      background: radial-gradient(circle at top, #fff3b0, #facc15, #b45309);
-      border: 3px solid gold;
-      color: #000 !important;
-      box-shadow: 0 0 15px rgba(250, 204, 21, .8);
-      animation: pop .4s ease;
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(.7)
+        pointer-events: auto
       }
 
-      70% {
-        transform: scale(1.2)
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
       }
 
-      100% {
-        transform: scale(1)
+      body {
+        background: radial-gradient(circle at top, #2a003f, #000);
+        color: rgb(212, 0, 255);
       }
-    }
 
-    #flash {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    #flash h1 {
-      color: gold;
-      font-size: 2.5rem
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #9ca3af;
-      background: #020202;
-    }
-
-    @media(max-width:600px) {
-      h1 {
-        font-size: 2.2rem
+      .theme-toggle {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        background: linear-gradient(135deg, #facc15, #d4af37);
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(250, 204, 21, .6);
+        transition: 0.3s ease;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        line-height: 1;
       }
+
+      .theme-toggle:hover {
+        transform: scale(1.1)
+      }
+
+      /* ================= LIGHT MODE (FIXED) ================= */
+
+      body.light {
+        background: #eef2ff;
+        color: #0f172a;
+      }
+
+      /* headings */
+      body.light h1,
+      body.light h2,
+      body.light h3 {
+        color: #1e3a8a;
+      }
+
+      /* sections */
+      body.light section {
+        background: transparent;
+      }
+
+      /* cards */
+      body.light .card {
+        background: #ffffff;
+        color: #0f172a;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
+      }
+
+      /* hero text */
+      body.light .hero p {
+        color: #334155;
+      }
+
+      /* buttons */
+      body.light button {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, .35);
+      }
+
+      body.light button:hover {
+        box-shadow: 0 15px 35px rgba(37, 99, 235, .45);
+      }
+
+      /* timer */
+      body.light #timer {
+        color: #1e40af;
+        border-color: #93c5fd;
+        background: #eff6ff;
+      }
+
+      /* boxes */
+      body.light .stop-box,
+      body.light .streak-box,
+      body.light .badge-tray {
+        background: #f8fafc;
+        border-color: #93c5fd;
+      }
+
+      /* badge slots */
+      body.light .badge-slot {
+        color: #94a3b8;
+      }
+
+      /* footer */
+      body.light footer {
+        background: #e5edff;
+        color: #334155;
+      }
+
 
       section {
-        padding: 60px 6%
-      }
-    }
-
-    a {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    /* ================= PAGE TRANSITION ================= */
-    #pageWipe {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9998;
-      background: rgba(0, 0, 0, .55);
-      opacity: 0;
-    }
-
-    #pageWipe.play {
-      animation: wipe 1.2s ease-in-out forwards;
-    }
-
-    @keyframes wipe {
-      0% {
-        opacity: 0
+        padding: 80px 10%
       }
 
-      20% {
-        opacity: 1
+      h1,
+      h2,
+      h3 {
+        color: #c084fc
       }
 
-      70% {
-        opacity: 1
+      body.light h1,
+      body.light h2,
+      body.light h3 {
+        color: #1e3a8a;
       }
 
-      100% {
-        opacity: 0
-      }
-    }
-
-    /* ================= REVEAL ON SCROLL ================= */
-    section.reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      filter: blur(6px);
-      transition:
-        opacity .9s ease,
-        transform .9s cubic-bezier(.2, .8, .2, 1),
-        filter .9s ease;
-    }
-
-    section.reveal.in {
-      opacity: 1;
-      transform: none;
-      filter: none;
-    }
-
-    /* hero should never hide */
-    .hero {
-      opacity: 1 !important;
-      transform: none !important;
-      filter: none !important;
-    }
-
-    /* ================= EFFECTS (SNAP SLIDER) ================= */
-
-    #effects {
-      filter: brightness(1.05) saturate(1.05);
-    }
-
-    .effects-area {
-      display: grid;
-      gap: 24px;
-    }
-
-    /* dots (override global button padding/margins) */
-    .effects-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .effects-dots button {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(192, 132, 252, .35);
-      cursor: pointer;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-shadow: none !important;
-    }
-
-    .effects-dots button:hover {
-      transform: none !important;
-      box-shadow: none !important;
-    }
-
-    .effects-dots button.active {
-      background: #facc15;
-      box-shadow: 0 0 10px rgba(250, 204, 21, .55) !important;
-    }
-
-    /* bar */
-    .effects-bar {
-      position: relative;
-      overflow: hidden;
-      border-radius: 999px;
-      border: 1px solid rgba(192, 132, 252, .35);
-      background: rgba(35, 25, 70, 0.45);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, .4);
-      padding: 10px 14px;
-      backdrop-filter: blur(6px);
-    }
-
-    /* soft edge fade */
-    .effects-bar::before,
-    .effects-bar::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 80px;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .effects-bar::before {
-      left: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0));
-    }
-
-    .effects-bar::after {
-      right: 0;
-      background: linear-gradient(to left, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0));
-    }
-
-    /* viewport hides overflow */
-    .effects-viewport {
-      overflow: hidden;
-    }
-
-    .effects-track {
-      display: flex;
-      width: 100%;
-    }
-
-    .fx-row p,
-    .fx-stat .lbl {
-      color: #e5e7eb;
-    }
-
-    .fx-title {
-      color: #e9d5ff;
-    }
-
-    .effects-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: rgba(250, 204, 21, .12);
-      border: 1px solid rgba(250, 204, 21, .22);
-      color: #facc15;
-      font-size: 1rem;
-    }
-
-    .effects-pill strong {
-      color: #facc15;
-      font-weight: 800;
-    }
-
-    .effects-track {
-      pointer-events: auto;
-    }
-
-    .effects-slide{
-      pointer-events: auto;
-      transform: translateZ(0);
-    }
-
-    .effects-pill{
-      width: fit-content;        /* 👈 content decides width */
-      max-width: 900px;          /* 👈 hard cap */
-      padding: 16px 20px;
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      box-sizing: border-box;
-    }
-
-    .effects-slide{
-      flex: 0 0 100%;
-      display: flex;
-      justify-content: center;
-      padding: 0 18px;   /* 👈 THIS creates space */
-      box-sizing: border-box;
-    }
-
-    /* ================= COOL STUFF BELOW ================= */
-
-    .effects-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 26px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .effects-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .fx-card {
-      background: rgba(35, 25, 70, 0.55);
-      border: 1px solid rgba(192, 132, 252, .28);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
-      backdrop-filter: blur(8px);
-    }
-
-    .fx-title {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
-      color: #c084fc;
-    }
-
-    .fx-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .fx-row {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(250, 204, 21, .14);
-      background: rgba(0, 0, 0, .25);
-    }
-
-    .fx-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-top: 6px;
-      background: #facc15;
-      box-shadow: 0 0 10px rgba(250, 204, 21, .45);
-    }
-
-    .fx-row h4 {
-      margin: 0;
-      font-size: 1rem;
-      color: #facc15;
-    }
-
-    .fx-row p {
-      margin: 4px 0 0;
-      color: #d1d5db;
-      opacity: .95;
-      line-height: 1.45;
-      font-size: .95rem;
-    }
-
-    .fx-stats {
-      display: grid;
-      gap: 12px;
-    }
-
-    .fx-stat {
-      padding: 14px 14px;
-      border-radius: 16px;
-      background: rgba(0, 0, 0, .25);
-      border: 1px solid rgba(192, 132, 252, .22);
-    }
-
-    .fx-stat .big {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #facc15;
-    }
-
-    .fx-stat .lbl {
-      color: #d1d5db;
-      opacity: .9;
-      margin-top: 2px;
-      font-size: .95rem;
-    }
-
-    /* thin LED strip on the bottom edge */
-    .glow-strip {
-      position: relative;
-      border: 1px solid rgba(147, 197, 253, .55);
-      /* light blue border */
-      border-radius: inherit;
-      overflow: visible;
-    }
-
-    .glow-strip::after {
-      content: "";
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: -2px;
-      /* sits just outside */
-      height: 3px;
-      /* THIN strip */
-      border-radius: 999px;
-
-      background: linear-gradient(90deg,
-          transparent 0%,
-          rgba(147, 197, 253, .85) 20%,
-          rgba(59, 130, 246, 1) 50%,
-          rgba(147, 197, 253, .85) 80%,
-          transparent 100%);
-
-      filter: blur(3px);
-      opacity: .95;
-      pointer-events: none;
-    }
-
-    .fx-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .fx-mini {
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(250, 204, 21, .25);
-      background: rgba(0, 0, 0, .25);
-      color: #facc15;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .fx-mini:hover {
-      transform: translateY(-1px);
-    }
-
-    /* ================= FOCUS MODE (CLEAN) ================= */
-
-    body.focus-mode {
-      overflow: hidden;
-    }
-
-    /* dim + blur */
-    body.focus-mode::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .45);
-      backdrop-filter: blur(6px);
-      z-index: 50;
-      pointer-events: none;
-    }
-
-    /* challenge stays normal */
-    #challenge {
-      position: relative;
-      z-index: 60;
-    }
-
-    /* disable back-to-top */
-    body.focus-mode #topBtn {
-      opacity: .25;
-      pointer-events: none;
-    }
-
-    /* ================= CENTER SECTION – BRIGHT MODE ================= */
-
-    /* ================= CENTER SECTION – BRIGHT MODE (LIGHT MODE ONLY) ================= */
-
-    body.light #effects {
-      background: transparent;
-    }
-
-    /* main cards */
-    body.light #effects .fx-card {
-      background: #f8fafc;
-      color: #0f172a;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .15);
-    }
-
-    /* slider bar */
-    body.light #effects .effects-bar {
-      background: rgba(255, 255, 255, .10);
-      border: 1px solid rgba(59, 130, 246, .35);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, .20);
-    }
-
-    /* pills */
-    body.light #effects .effects-pill {
-      background: #ffffff;
-      color: #0f172a;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
-    }
-
-    body.light #effects .effects-pill strong {
-      color: #1e40af;
-    }
-
-    /* rows + stats */
-    body.light #effects .fx-row,
-    body.light #effects .fx-stat {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-    }
-
-    body.light #effects .fx-row p,
-    body.light #effects .fx-stat .lbl {
-      color: #334155;
-    }
-
-    /* titles */
-    body.light #effects h2,
-    body.light #effects .fx-title {
-      color: #1e293b;
-      color: none;
-    }
-
-    /* remove dark edge fades ONLY in light mode */
-    body.light .effects-bar::before,
-    body.light .effects-bar::after {
-      display: none;
-    }
-
-
-    /* ================= FOCUS BLOCK ================= */
-
-    #focusBlock {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .95);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .focus-inner {
-      max-width: 420px;
-      padding: 30px;
-      border-radius: 20px;
-      background: rgba(20, 10, 40, .9);
-      border: 2px solid #facc15;
-      box-shadow: 0 0 60px rgba(250, 204, 21, .45);
-    }
-
-    .focus-inner h1 {
-      color: #facc15;
-      margin-bottom: 10px;
-    }
-
-    .focus-inner p {
-      color: #e5e7eb;
-      margin-bottom: 10px;
-    }
-
-    /* ================= HARD DARK-MODE OVERRIDES (PASTE LAST) ================= */
-    body:not(.light) #effects .fx-card,
-    body:not(.light) #effects .fx-row,
-    body:not(.light) #effects .fx-stat {
-      background: rgba(0, 0, 0, .40) !important;
-      color: #e5e7eb !important;
-      border: 1px solid rgba(192, 132, 252, .22) !important;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, .45) !important;
-    }
-
-    body:not(.light) #effects .fx-row p,
-    body:not(.light) #effects .fx-stat .lbl {
-      color: #d1d5db !important;
-    }
-
-    body:not(.light) #effects .fx-title,
-    body:not(.light) #effects h2 {
-      color: #c084fc !important;
-      color: none !important;
-    }
-
-    body:not(.light) #effects .effects-bar {
-      background: rgba(0, 0, 0, .35) !important;
-      border: 1px solid rgba(192, 132, 252, .35) !important;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, .4) !important;
-      backdrop-filter: blur(6px) !important;
-    }
-
-    /* restore the dark edge fades in dark mode */
-    body:not(.light) #effects .effects-bar::before,
-    body:not(.light) #effects .effects-bar::after {
-      display: block !important;
-    }
-
-    /* pills */
-    body:not(.light) #effects .effects-pill {
-      background: rgba(0, 0, 0, .25) !important;
-      color: #f8fafc !important;
-      border: 1px solid rgba(250, 204, 21, .28) !important;
-      box-shadow: none !important;
-    }
-
-    body:not(.light) #effects .effects-pill strong {
-      color: #facc15 !important;
-    }
-    .penalty-warning{
-      margin-top: 12px;
-      padding: 10px 16px;
-      border-radius: 12px;
-
-      background: rgba(220, 38, 38, .15);
-      border: 1px solid rgba(220, 38, 38, .6);
-      color: #fecaca;
-
-      font-weight: 700;
-      animation: pulseWarn .6s ease;
-    }
-
-    @keyframes pulseWarn{
-      0%{ transform: scale(.95); opacity: .6; }
-      60%{ transform: scale(1.05); opacity: 1; }
-      100%{ transform: scale(1); }
-    }
-
-    #challenge {
-      scroll-margin-top: 15vh;
-      scroll-margin-bottom: 15vh;
-    }
-
-    /* ====== CLEAN PREMIUM HOVER GLOW (PASTE LAST) ====== */
-    :root{
-      --glow-yellow: rgba(250,204,21,.55);
-      --glow-purple: rgba(192,132,252,.55);
-      --glow-blue:   var(--accent-color);
-      --accent-color: #3b82f6;
-    }
-
-    body:not(.light) {
-      --accent-color: #c183fc;   /* purple for dark mode */
-    }
-
-    /* make pseudo-elements behave correctly on buttons */
-    button{ position:relative; overflow:hidden; }
-
-    /* reusable glow hover class */
-    .glow-hover{
-      position: relative;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    }
-    .glow-hover::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius: inherit;
-      background: linear-gradient(120deg, var(--glow-yellow), var(--glow-purple), var(--glow-blue));
-      filter: blur(12px);     /* <- glow softness */
-      opacity: 0;
-      z-index: -1;
-      transition: opacity .25s ease, filter .25s ease;
-    }
-    .glow-hover:hover{
-      transform: translateY(-4px);
-      box-shadow:
-        0 18px 55px rgba(0,0,0,.55),
-        0 0 26px rgba(192,132,252,.25);
-    }
-    .glow-hover:hover::after{
-      opacity: .95;
-      filter: blur(16px);
-    }
-
-    /* BIG TEXT GLOW (headings) */
-    .glow-text{
-      color:
-        0 0 10px rgba(192,132,252,.45),
-        0 0 22px var(--accent-color);
-    }
-    .glow-text.gold-text{
-      color:
-        0 0 10px rgba(250,204,21,.55),
-        0 0 22px rgba(250,204,21,.25);
-    }
-
-    /* ====== REDUCE BLUR (your ask) ====== */
-    .effects-bar{ backdrop-filter: blur(3px) !important; } /* was 6px */
-    .fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
-    body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
-
-        /* ===== BADGE TOOLTIP POPUP ===== */
-
-    .badge-slot{
-      position: relative;
-      cursor: pointer;
-    }
-
-    /* popup bubble */
-    .badge-slot::after{
-      content: attr(data-tip);
-      position: absolute;
-
-      bottom: 120%;          /* above badge */
-      left: 50%;
-      transform: translateX(-50%) scale(.9);
-
-      background: rgba(0,0,0,.85);
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 8px;
-
-      font-size: .75rem;
-      white-space: nowrap;
-
-      opacity: 0;
-      pointer-events: none;
-
-      transition: .25s ease;
-      backdrop-filter: blur(6px);
-    }
-
-    /* arrow */
-    .badge-slot::before{
-      content:"";
-      position:absolute;
-
-      bottom: 105%;
-      left: 50%;
-      transform: translateX(-50%);
-
-      border:6px solid transparent;
-      border-top-color: rgba(0,0,0,.85);
-
-      opacity:0;
-      transition:.25s ease;
-    }
-
-    /* show on hover */
-    .badge-slot:hover::after,
-    .badge-slot:hover::before{
-      opacity:1;
-      transform: translateX(-50%) scale(1);
-    }
-
-    /* ===== BADGE UNLOCK POPUP ===== */
-
-    #badgePopup{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 20000;
-      animation: fadeIn .3s ease;
-    }
-
-    .badge-popup-inner{
-      background: linear-gradient(135deg,#facc15,#f59e0b);
-      padding: 30px 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 0 40px rgba(250,204,21,.7);
-      animation: popBadge .4s ease;
-    }
-
-    .badge-popup-inner h2{
-      margin-bottom: 10px;
-      color:#000;
-    }
-
-    .badge-popup-inner p{
-      color:#000;
-      font-weight:600;
-    }
-
-    @keyframes popBadge{
-      0%{transform:scale(.6)}
-      70%{transform:scale(1.1)}
-      100%{transform:scale(1)}
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0}
-      to{opacity:1}
-    }
-
-    /* ===== TITLE GLOW ANIMATION ===== */
-    @keyframes glowShift {
-      0%   { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
-      25%  { color: 0 0 10px #6f42c1, 0 0 20px #6f42c1; }
-      50%  { color: 0 0 10px #00c9a7, 0 0 20px #00c9a7; }
-      75%  { color: 0 0 10px #ff4da6, 0 0 20px #ff4da6; }
-      100% { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
-    }
-
-    /* ===== MOVING TEXT GRADIENT ===== */
-    .hero-title {
-      font-weight: 700;
-      background: linear-gradient(
-        90deg,
-        #4da6ff,
-        #6f42c1,
-        #00c9a7,
-        #ff4da6,
-        #4da6ff
-      );
-      background-size: 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: textWave 5s linear infinite;
-    }
-
-    @keyframes textWave {
-      0% { background-position: 0%; }
-      100% { background-position: 300%; }
-    }
-
-    body.dark-mode .hero-title {
-      background: linear-gradient(
-        90deg,
-        #c183fc,
-        #ffffff,
-        #c183fc
-      );
-      background-size: 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: textWave 5s linear infinite;
-    }
-
-    /* ===== CURSOR GLOW ===== */
-    .cursor-glow {
-      position: fixed;
-      width: 150px;
-      height: 150px;
-      pointer-events: none;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(77,166,255,0.4) 0%, rgba(77,166,255,0.1) 40%, transparent 70%);
-      transform: translate(-50%, -50%);
-      transition: background 0.3s ease;
-      z-index: 9999;
-    }
-
-    body.dark-mode .cursor-glow {
-      background: radial-gradient(circle, rgba(193,131,252,0.4) 0%, rgba(193,131,252,0.1) 40%, transparent 70%);
-    }
-
-  </style>
-</head>
-
-<body>
-
-  <button id="topBtn">↑</button>
-
-  <div id="pageWipe"></div>
-  <button id="themeToggle" class="theme-toggle">🌙</button>
-
-  <section class="hero">
-    <h1 class="glow-text hero-title">Break Free from <span class = "gold">Digital Addiction</span></h1>
-    <p>An interactive awareness & self-discipline platform.</p>
-    <button onclick="scrollElementFullyIntoView(
-  document.querySelector('.fx-actions'),
-  40
-)">
-  Start Journey
-</button>
-
-  </section>
-
-  <section id="info">
-  <div class="card glow-hover">
-
-      <h2 style="text-align:center;">What is Digital Addiction?</h2>
-      <div class="info-grid">
-        <div>
-          <h3 class="gold">Warning Signs</h3>
-          <p>Anxiety, restlessness</p>
-        </div>
-        <div>
-          <h3 class="gold">Effects</h3>
-          <p>Stress, low productivity</p>
-        </div>
-        <div>
-          <h3 class="gold">Solution</h3>
-          <p>Mindful usage</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="cursor-glow"></div>
-
-  <section id="effects">
-    <div class="effects-area">
-
-      <h2>Effects</h2>
-
-      <!-- Snap slider bar -->
-      <div class="effects-bar glow-hover" aria-label="Effects slider">
-        <div class="effects-viewport">
-          <div class="effects-track" id="effectsTrack">
-            <div class="effects-slide clone">
-              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
-                becomes 1 hour</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft">
-<span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
-                switching kills deep work</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft">
-<span class="effects-icon">🌙</span><strong>Poor sleep</strong> — late
-                scrolling delays sleep quality</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft">
-<span class="effects-icon">🧠</span><strong>Mental fatigue</strong> — info
-                overload makes you feel drained</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">📉</span><strong>Motivation drop</strong> — quick
-                dopamine makes work feel “boring”</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">😵</span><strong>Anxiety</strong> — nonstop
-                stimulation increases restlessness</span>
-            </div>
-            <div class="effects-slide">
-              <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
-                becomes 1 hour</span>
-            </div>
-            <div class="effects-slide clone">
-              <span class="effects-pill glow-hover glow-soft">
-<span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
-                switching kills deep work</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="effects-dots" id="effectsDots"></div>
-
-      <!-- Cool stuff below -->
-      <div class="effects-grid grid glow-edge">
-        <div class="fx-card glow-hover">
-
-          <h3 class="fx-title">What’s happening in your brain?</h3>
-
-          <ul class="fx-list glow-edge">
-            <li class="fx-row glow-hover glow-soft">
-
-              <span class="fx-dot glow-hover"></span>
-              <div class="list glow-edge">
-                <h4>Attention gets fragmented</h4>
-                <p>Your brain adapts to quick rewards, so long tasks feel harder.</p>
-              </div>
-            </li>
-            <li class="fx-row glow-hover">
-              <span class="fx-dot glow-hover"></span>
-              <div>
-                <h4>Sleep rhythm shifts</h4>
-                <p>Late scrolling delays melatonin release — you sleep later and worse.</p>
-              </div>
-            </li>
-            <li class="fx-row glow-hover">
-              <span class="fx-dot"></span>
-              <div>
-                <h4>Stress baseline increases</h4>
-                <p>Always-on notifications keep your nervous system “alert”.</p>
-              </div>
-            </li>
-          </ul>
-
-          <div class="fx-actions">
-            <button class="fx-mini"
-              onclick="scrollElementFullyIntoView(
-                document.getElementById('challenge'),
-                30
-              )">
-              Try 1-Hour Detox
-            </button>
-            <button class="fx-mini" onclick="quickTip()">Quick Tip</button>
-            <button class="fx-mini" onclick="goTo1()">More Info</button>
-          </div>
-        </div>
-
-        <div class="fx-stats glow">
-          <div class="fx-card fx-stat glow-hover">
-            <div class="big" id="tipTitle1">⚡ Micro-Reset</div>
-            <div class="lbl" id="tipText1">Turn on grayscale for 10 minutes while studying.</div>
-          </div>
-
-          <div class="fx-card fx-stat glow-hover">
-            <div class="big" id="tipTitle2">🎯 Study Mode</div>
-            <div class="lbl" id="tipText2">Use one playlist only for studying — your brain links it to focus.</div>
-          </div>
-
-          <div class="fx-card fx-stat glow-hover">
-            <div class="big" id="tipTitle3">🌙 Sleep Win</div>
-            <div class="lbl" id="tipText3">No screens 30 minutes before sleep (start small).</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-  <section id="challenge">
-  <div class="card glow-hover" style="text-align:center;">
-
-      <h2>1-Hour Digital Detox</h2>
-
-      <div class="challenge-top">
-        <button id="acceptBtn" onclick="acceptChallenge()">
-          Accept Challenge
-        </button>
-      
-        <div class="progress-ring">
-          <svg width="170" height="170">
-            <circle class="ring-bg" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
-            <circle class="ring-progress" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
-          </svg>
-          <div id="timerText">60:00</div>
-        </div>
-      </div>
-
-      <div id="statusMsg"></div>
-
-      <div class="controls" id="controls">
-        <button class="stop-btn glow-hover glow-soft" onclick="manualStop()">
-Stop</button>
-        <button class="glow-hover glow-soft" onclick="resumeFromFocusBlock()">
-Resume</button>
-        <button class="glow-hover glow-soft" onclick="resetTimer()">
-Reset</button> <!-- ✅ ADD -->
-      </div>
-
-
-      <div class="stop-box glow-hover">⏸️ Stops: <span id="stopCount">0</span></div>
-
-      <div class="streak-box glow-hover">
-        🔥 Current Streak: <span id="currentStreak">0</span><br>
-        🏆 Best Streak: <span id="bestStreak">0</span><br>
-        <button type="button" id="resetStreakBtn" class="glow-hover">Reset Streak</button>
-      </div>
-
-      <div class="badge-tray glow-hover">
-
-        Badges
-        <div id="badgeTray">
-        
-        
-  <div class="badge-slot" data-badge="30" data-tip="Complete 30 minutes of detox">⏱️</div>
-
-<div class="badge-slot" data-badge="complete" data-tip="Finish the full 1‑Hour Detox session">✅</div>
-
-<div class="badge-slot" data-badge="nostop" data-tip="Complete detox with zero stops">💎</div>
-
-<div class="badge-slot" data-badge="4" data-tip="Complete detox for 4 consecutive times">🔥</div>
-
-<!-- NEW ONES 👇 -->
-<div class="badge-slot" data-badge="7" data-tip="Complete detox for 7 consecutive times">🏅</div>
-
-<div class="badge-slot" data-badge="14" data-tip="Complete detox for 14 consecutive times">👑</div>
-
-      </div>
-       <button id="clearBadgesBtn" class="glow-hover">Clear Badges</button>
-    </div>
-  </section>
-
-  <footer>© Digital Wellness Initiative – PVM</footer>
-  <div id="focusBlock" style="display:none;">
-    <div class="focus-inner">
-      <h1>🚫 FOCUS BROKEN</h1>
-      <p id="focusReason">You left the focus session.</p>
-      <p id="focusPenalty">Penalty applied. Click resume to continue.</p>     
-      <button onclick="resumeTimer()">Resume Focus</button>
-    </div>
-  </div>
-
-  <audio id="alarmSound" preload="auto">
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
-  </audio>
-
-  <script>
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, 0);
-    });
-
-    // ===== DOM REFERENCES (FIX) =====
-    const acceptBtn = document.getElementById("acceptBtn");
-    const controls = document.getElementById("controls");
-    const timer = document.getElementById("timer");
-    const statusMsg = document.getElementById("statusMsg");
-    const stopCount = document.getElementById("stopCount");
-    const currentStreak = document.getElementById("currentStreak");
-    const bestStreak = document.getElementById("bestStreak");
-    const resetStreakBtn = document.getElementById("resetStreakBtn");
-    const clearBadgesBtn = document.getElementById("clearBadgesBtn");
-    const ring = document.querySelector(".ring-progress");
-    const timerText = document.getElementById("timerText");
-    const radius = 70;
-    const circumference = 2 * Math.PI * radius;
-    ring.style.strokeDasharray = circumference;
-    ring.style.strokeDashoffset = 0;
-
-    document.querySelectorAll("button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
-      });
-    });
-
-    const track = document.querySelector(".effects-track");
-    const slides = track.children;
-    const realCount = slides.length - 2; // exclude clones
-
-    let index = 1; // 👈 start on first REAL slide
-    const speed = 1100;
-    const dwell = 3500;
-
-    track.style.transform = `translateX(-${index * 100}%)`;
-
-    const dotsWrap = document.getElementById("effectsDots");
-    const realSlides = document.querySelectorAll(".effects-slide:not(.clone)").length;
-
-    // CREATE DOTS
-    for (let i = 0; i < realSlides; i++) {
-      const dot = document.createElement("button");
-      dot.classList.add("effects-dot");
-      dot.addEventListener("click", () => go(i, true));
-      dotsWrap.appendChild(dot);
-    }
-
-    // SET ACTIVE DOT
-    function setActiveDot() {
-      const dots = document.querySelectorAll(".effects-dot");
-      const realIndex = (index - 1 + realSlides) % realSlides;
-      dots.forEach((d, i) => d.classList.toggle("active", i === realIndex));
-    }
-
-    // MOVE SLIDER
-    function go(i, user = false) {
-      index = i + 1;
-      track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      setActiveDot();
-      if (user) restart();
-    }
-
-    // AUTOPLAY
-    function next() {
-      index++;
-      track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      setActiveDot();
-
-      if (index === realSlides + 1) {
-        setTimeout(() => {
-          track.style.transition = "none";
-          index = 1;
-          track.style.transform = `translateX(-${index * 100}%)`;
-        }, speed);
-      }
-    }
-
-    let sliderInterval = null;
-
-    function restart() {
-      clearInterval(sliderInterval);
-      sliderInterval = setInterval(next, dwell);
-    }
-
-    setActiveDot();
-    sliderInterval = setInterval(next, dwell);
-
-    /* BACK TO TOP */
-    const topBtn = document.getElementById("topBtn");
-    window.addEventListener("scroll", () => {
-      topBtn.classList.toggle("show", window.scrollY > 400);
-    });
-
-    topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
-    const FILE_KEY = location.pathname.replace(/[^a-zA-Z0-9]/g, "_");
-    const SafeStorage = {
-      set: (k, v) => localStorage.setItem(FILE_KEY + "_" + k, JSON.stringify(v)),
-      get: (k, d) => { const v = localStorage.getItem(FILE_KEY + "_" + k); return v ? JSON.parse(v) : d },
-      remove: (k) => localStorage.removeItem(FILE_KEY + "_" + k)
-    };
-
-    const toggleBtn = document.getElementById("themeToggle");
-    if (SafeStorage.get("theme") === "light") {
-      document.body.classList.add("light");
-      toggleBtn.innerText = "☀️";
-    }
-    toggleBtn.onclick = () => {
-      document.body.classList.toggle("light");
-      SafeStorage.set("theme", document.body.classList.contains("light") ? "light" : "dark");
-      toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
-    };
-
-    const fixedTotalTime = 10;
-    let totalTime = 10;
-    let time = 10, interval = null, running = false;
-    let stopCounter = 0;
-    let intentionalFullscreenExit = false;
-
-
-    let currentStreakVal = SafeStorage.get("currentStreak", 0);
-    let bestStreakVal = SafeStorage.get("bestStreak", 0);
-    const earnedBadges = SafeStorage.get("badges", []);
-
-    currentStreak.innerText = currentStreakVal;
-    bestStreak.innerText = bestStreakVal;
-    updateTimer(); restoreBadges();
-
-    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    let currentSource = null;
-
-    async function repeatingFunction(url) {
-      // If a sound is already playing, stop it first
-      if (currentSource) {
-        currentSource.stop();
+      /* ================= BADGES – LIGHT MODE INACTIVE ================= */
+
+      body.light .badge-slot:not(.unlocked) {
+        background: #f1f5f9;
+        color: #94a3b8;
+        box-shadow: none;
+        filter: grayscale(1);
+        opacity: .85;
       }
 
-      // Fetch and decode the audio file
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-      // Create and configure the buffer source
-      const source = audioCtx.createBufferSource();
-      source.buffer = audioBuffer;
+      .gold {
+        color: #facc15 !important
+      }
 
-      source.loopStart = 0.57;
-      source.loopEnd = 2.07;
-      source.loop = true; // This property is key for seamless 1-sec loops
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
 
-      // Connect to speakers and start
-      source.connect(audioCtx.destination);
-      source.start(0);
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px
+      }
 
-      // Store reference so we can stop it later
-      currentSource = source;
-    }
+      .hero p {
+        max-width: 700px;
+        margin-bottom: 30px;
+        color: #ce09ff
+      }
 
-    let focusBroken = false;
-    function distractionDetected(reason) {
-      if (!running) return;
+      button {
+        padding: 14px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        background: linear-gradient(135deg, #facc15, #f59e0b);
+        margin: 8px;
+        transition: .3s ease;
+        position: relative;
+        overflow: visible;
+      }
 
-      pauseTimer(`🚫 ${reason}`, true);
-      document
+      button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(250, 204, 21, .8);
+      }
 
-      // 🔔 alarm
-      const alarm = document.getElementById("alarmSound");
+      .stop-btn {
+        background: #000;
+        color: yellow;
+        border: 2px solid #797979;
+      }
 
-      focusBroken = true;
-      document.body.classList.remove("focus-mode");
+      .card {
+        background: rgba(0, 0, 0, .8);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, .8);
+        animation: fadeUp 1s ease;
+      }
 
-      // 🔴 UPDATE THE EXISTING BLACK WARNING BOX
-      document.getElementById("focusReason").innerText = `🚫 ${reason}`;
-      document.getElementById("focusPenalty").innerText =
-        "⛔ +1 minute penalty applied. Click resume to continue.";
-
-      document.getElementById("focusBlock").style.display = "flex";
-
-      // const stopAlarmBtn = document.getElementById()
-
-      repeatingFunction('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg')
-
-      // 👁️ ensure challenge is visible
-      setTimeout(() => {
-        centerElementInViewport();
-      }, 100);
-    }
-
-
-    function acceptChallenge() {
-      acceptBtn.style.display = "none";
-      controls.style.display = "block";
-
-      document.body.classList.add("focus-mode");
-
-      enterFullscreen();
-
-      // 🔧 IMPORTANT: delay for Windows fullscreen layout
-      setTimeout(() => {
-        centerElementInViewport(document.getElementById("challenge"));
-      }, 150);
-
-      startTimer();
-    }
-
-    function centerElementInViewport(el) {
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-
-      const absoluteTop = rect.top + window.pageYOffset;
-      const elementCenter = absoluteTop + rect.height / 2;
-      const viewportCenter = window.innerHeight / 2;
-
-      const targetScroll = elementCenter - viewportCenter;
-
-      window.scrollTo({
-        top: Math.max(0, targetScroll),
-        behavior: "smooth"
-      });
-    }
-
-    function enterFullscreen() {
-      const el = document.documentElement;
-
-      if (document.fullscreenElement) return;
-
-      if (el.requestFullscreen) el.requestFullscreen();
-      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-      else if (el.msRequestFullscreen) el.msRequestFullscreen();
-    }
-
-    let timeTrue = true;
-    function startTimer() {
-      if (running) return;
-      running = true;
-      interval = setInterval(() => {
-        time--; updateTimer();
-        if (time+fixedTotalTime/2 <= totalTime){
-          unlockBadge("30");
-        };
-        if (time <= 0) {
-          clearInterval(interval);
-          running = false;
-
-          unlockBadge("complete");
-          if (stopCounter === 0) unlockBadge("nostop");
-          updateStreak();
-
-          statusMsg.innerText = "✅ Challenge completed!";
-
-          const confetti = document.getElementById("confettiSound");
-          if (confetti) {
-            confetti.currentTime = 0;
-            confetti.play().catch(() => {});
-          }
-
-          document.body.classList.remove("focus-mode");
-          document.exitFullscreen?.();
-
-          // wait for layout to settle
-          setTimeout(() => {
-            centerElementInViewport(document.getElementById("challenge"));
-          }, 200);
-
-          time = 10;
-          stopCounter = 0;
-          stopCount.innerText = "0";
-          updateTimer();
-
-          controls.style.display = "none";
-          acceptBtn.style.display = "inline-block";
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px)
         }
-      }, 1000);
-    }
 
-    function pauseTimer(msg, count = false) {
-      if (!running) return;
-
-      clearInterval(interval);
-      running = false;
-
-      if (count) {
-        stopCounter++;
-        stopCount.innerText = stopCounter;
-
-        // ⛔ penalty: add 60 seconds
-        time += 60;
-        totalTime += 60;
+        to {
+          opacity: 1;
+          transform: translateY(0)
+        }
       }
 
-      statusMsg.innerText = msg + " (+1 min penalty)";
-    }
-
-    function resumeFromFocusBlock() {
-      // ✅ this function is the USER GESTURE
-      enterFullscreen();
-
-      // now resume logic
-      resumeTimer();
-    }
-
-    function manualStop() {
-      intentionalFullscreenExit = true;
-      distractionDetected("Stopped manually");
-      document.exitFullscreen?.();
-    }
-
-    function resetTimer() {
-      intentionalFullscreenExit = true;
-      totalTime = 10;
-
-      clearInterval(interval);
-      running = false;
-      time = 10;
-      stopCounter = 0;
-
-      stopCount.innerText = "0";
-      statusMsg.innerText = "";
-      updateTimer();
-
-      // exit focus mode + fullscreen
-      document.body.classList.remove("focus-mode");
-      document.exitFullscreen?.();
-
-      // ✅ ALWAYS re-center challenge (even outside focus mode)
-      setTimeout(() => {
-        centerElementInViewport(document.getElementById("challenge"));
-      }, 80);
-    }
-
-
-    function resumeTimer() {
-      if (currentSource) {
-        currentSource.stop();
-        currentSource = null;
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+        text-align: center;
       }
+
+      .image-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        align-items: center;
+      }
+
+      .image-section img {
+        width: 100%;
+        border-radius: 20px;
+      }
+
+      /* ===== PROGRESS RING TIMER ===== */
+
+      /* ===== CENTER BUTTON + TIMER PROPERLY ===== */
+
+      .challenge-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        margin: 30px auto;
+        width: fit-content;   /* IMPORTANT */
+      }
+
+      .progress-ring {
+        position: relative;
+        width: 170px;
+        height: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .progress-ring svg {
+        transform: rotate(90deg);
+      }
+
+      .ring-bg {
+        stroke: rgba(255,255,255,0.1);
+      }
+
+      .ring-progress {
+        stroke: var(--accent-color);
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s linear;
+        transform: scaleX(-1);      /* 👈 THIS reverses direction */
+        transform-origin: center;
+      }
+
+      #timerText {
+        position: absolute;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        line-height: 1;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      .controls {
+        display: none;
+        margin-top: 20px
+      }
+
+      #statusMsg {
+        margin-top: 10px;
+        color: #60a5fa
+      }
+
+      .stop-box,
+      .streak-box,
+      .badge-tray {
+        margin-top: 25px;
+        padding: 15px;
+        border: 1px solid #facc15;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      #badgeTray{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+        max-width: 700px;
+        margin: 20px auto;
+      }
+
+      .badge-slot {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 2px dashed rgba(250, 204, 21, .5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: rgba(250, 204, 21, .3);
+        filter: grayscale(1);
+      }
+
+      .badge-slot.unlocked {
+        filter: none !important;
+        background: radial-gradient(circle at top, #fff3b0, #facc15, #b45309);
+        border: 3px solid gold;
+        color: #000 !important;
+        box-shadow: 0 0 15px rgba(250, 204, 21, .8);
+        animation: pop .4s ease;
+      }
+
+      @keyframes pop {
+        0% {
+          transform: scale(.7)
+        }
+
+        70% {
+          transform: scale(1.2)
+        }
+
+        100% {
+          transform: scale(1)
+        }
+      }
+
+      #flash {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      #flash h1 {
+        color: gold;
+        font-size: 2.5rem
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px;
+        color: #9ca3af;
+        background: #020202;
+      }
+
+      @media(max-width:600px) {
+        h1 {
+          font-size: 2.2rem
+        }
+
+        section {
+          padding: 60px 6%
+        }
+      }
+
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* ================= PAGE TRANSITION ================= */
+      #pageWipe {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+        background: rgba(0, 0, 0, .55);
+        opacity: 0;
+      }
+
+      #pageWipe.play {
+        animation: wipe 1.2s ease-in-out forwards;
+      }
+
+      @keyframes wipe {
+        0% {
+          opacity: 0
+        }
+
+        20% {
+          opacity: 1
+        }
+
+        70% {
+          opacity: 1
+        }
+
+        100% {
+          opacity: 0
+        }
+      }
+
+      /* ================= REVEAL ON SCROLL ================= */
+      section.reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(6px);
+        transition:
+          opacity .9s ease,
+          transform .9s cubic-bezier(.2, .8, .2, 1),
+          filter .9s ease;
+      }
+
+      section.reveal.in {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+
+      /* hero should never hide */
+      .hero {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+
+      /* ================= EFFECTS (SNAP SLIDER) ================= */
+
+      #effects {
+        filter: brightness(1.05) saturate(1.05);
+      }
+
+      .effects-area {
+        display: grid;
+        gap: 24px;
+      }
+
+      /* dots (override global button padding/margins) */
+      .effects-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .effects-dots button {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(192, 132, 252, .35);
+        cursor: pointer;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+      }
+
+      .effects-dots button:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .effects-dots button.active {
+        background: #facc15;
+        box-shadow: 0 0 10px rgba(250, 204, 21, .55) !important;
+      }
+
+      /* bar */
+      .effects-bar {
+        position: relative;
+        overflow: hidden;
+        border-radius: 999px;
+        border: 1px solid rgba(192, 132, 252, .35);
+        background: rgba(35, 25, 70, 0.45);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, .4);
+        padding: 10px 14px;
+        backdrop-filter: blur(6px);
+      }
+
+      /* soft edge fade */
+      .effects-bar::before,
+      .effects-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .effects-bar::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0));
+      }
+
+      .effects-bar::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0));
+      }
+
+      /* viewport hides overflow */
+      .effects-viewport {
+        overflow: hidden;
+      }
+
+      .effects-track {
+        display: flex;
+        width: 100%;
+      }
+
+      .fx-row p,
+      .fx-stat .lbl {
+        color: #e5e7eb;
+      }
+
+      .fx-title {
+        color: #e9d5ff;
+      }
+
+      .effects-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: rgba(250, 204, 21, .12);
+        border: 1px solid rgba(250, 204, 21, .22);
+        color: #facc15;
+        font-size: 1rem;
+      }
+
+      .effects-pill strong {
+        color: #facc15;
+        font-weight: 800;
+      }
+
+      .effects-track {
+        pointer-events: auto;
+      }
+
+      .effects-slide{
+        pointer-events: auto;
+        transform: translateZ(0);
+      }
+
+      .effects-pill{
+        width: fit-content;        /* 👈 content decides width */
+        max-width: 900px;          /* 👈 hard cap */
+        padding: 16px 20px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        box-sizing: border-box;
+      }
+
+      .effects-slide{
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 18px;   /* 👈 THIS creates space */
+        box-sizing: border-box;
+      }
+
+      /* ================= COOL STUFF BELOW ================= */
+
+      .effects-grid {
+        display: grid;
+        grid-template-columns: 1.2fr .8fr;
+        gap: 26px;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .effects-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .fx-card {
+        background: rgba(35, 25, 70, 0.55);
+        border: 1px solid rgba(192, 132, 252, .28);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+        backdrop-filter: blur(8px);
+      }
+
+      .fx-title {
+        margin: 0 0 10px;
+        font-size: 1.3rem;
+        color: #c084fc;
+      }
+
+      .fx-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .fx-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(250, 204, 21, .14);
+        background: rgba(0, 0, 0, .25);
+      }
+
+      .fx-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-top: 6px;
+        background: #facc15;
+        box-shadow: 0 0 10px rgba(250, 204, 21, .45);
+      }
+
+      .fx-row h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: #facc15;
+      }
+
+      .fx-row p {
+        margin: 4px 0 0;
+        color: #d1d5db;
+        opacity: .95;
+        line-height: 1.45;
+        font-size: .95rem;
+      }
+
+      .fx-stats {
+        display: grid;
+        gap: 12px;
+      }
+
+      .fx-stat {
+        padding: 14px 14px;
+        border-radius: 16px;
+        background: rgba(0, 0, 0, .25);
+        border: 1px solid rgba(192, 132, 252, .22);
+      }
+
+      .fx-stat .big {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #facc15;
+      }
+
+      .fx-stat .lbl {
+        color: #d1d5db;
+        opacity: .9;
+        margin-top: 2px;
+        font-size: .95rem;
+      }
+
+      /* thin LED strip on the bottom edge */
+      .glow-strip {
+        position: relative;
+        border: 1px solid rgba(147, 197, 253, .55);
+        /* light blue border */
+        border-radius: inherit;
+        overflow: visible;
+      }
+
+      .glow-strip::after {
+        content: "";
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: -2px;
+        /* sits just outside */
+        height: 3px;
+        /* THIN strip */
+        border-radius: 999px;
+
+        background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(147, 197, 253, .85) 20%,
+            rgba(59, 130, 246, 1) 50%,
+            rgba(147, 197, 253, .85) 80%,
+            transparent 100%);
+
+        filter: blur(3px);
+        opacity: .95;
+        pointer-events: none;
+      }
+
+      #particles{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 100;
+  pointer-events: none;
+}
+
+      .fx-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .fx-mini {
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(250, 204, 21, .25);
+        background: rgba(0, 0, 0, .25);
+        color: #facc15;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .fx-mini:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ================= FOCUS MODE (CLEAN) ================= */
+
+      body.focus-mode {
+        overflow: hidden;
+      }
+
+      /* dim + blur */
+      body.focus-mode::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .45);
+        backdrop-filter: blur(6px);
+        z-index: 50;
+        pointer-events: none;
+      }
+
+      /* challenge stays normal */
+      #challenge {
+        position: relative;
+        z-index: 60;
+      }
+
+      /* disable back-to-top */
+      body.focus-mode #topBtn {
+        opacity: .25;
+        pointer-events: none;
+      }
+
+      /* ================= CENTER SECTION – BRIGHT MODE ================= */
+
+      /* ================= CENTER SECTION – BRIGHT MODE (LIGHT MODE ONLY) ================= */
+
+      body.light #effects {
+        background: transparent;
+      }
+
+      /* main cards */
+      body.light #effects .fx-card {
+        background: #f8fafc;
+        color: #0f172a;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, .15);
+      }
+
+      /* slider bar */
+      body.light #effects .effects-bar {
+        background: rgba(255, 255, 255, .10);
+        border: 1px solid rgba(59, 130, 246, .35);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, .20);
+      }
+
+      /* pills */
+      body.light #effects .effects-pill {
+        background: #ffffff;
+        color: #0f172a;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+      }
+
+      body.light #effects .effects-pill strong {
+        color: #1e40af;
+      }
+
+      /* rows + stats */
+      body.light #effects .fx-row,
+      body.light #effects .fx-stat {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+      }
+
+      body.light #effects .fx-row p,
+      body.light #effects .fx-stat .lbl {
+        color: #334155;
+      }
+
+      /* titles */
+      body.light #effects h2,
+      body.light #effects .fx-title {
+        color: #1e293b;
+        color: none;
+      }
+
+      /* remove dark edge fades ONLY in light mode */
+      body.light .effects-bar::before,
+      body.light .effects-bar::after {
+        display: none;
+      }
+
+
+      /* ================= FOCUS BLOCK ================= */
+
+      #focusBlock {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .95);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .focus-inner {
+        max-width: 420px;
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(20, 10, 40, .9);
+        border: 2px solid #facc15;
+        box-shadow: 0 0 60px rgba(250, 204, 21, .45);
+      }
+
+      .focus-inner h1 {
+        color: #facc15;
+        margin-bottom: 10px;
+      }
+
+      .focus-inner p {
+        color: #e5e7eb;
+        margin-bottom: 10px;
+      }
+
+      /* ================= HARD DARK-MODE OVERRIDES (PASTE LAST) ================= */
+      body:not(.light) #effects .fx-card,
+      body:not(.light) #effects .fx-row,
+      body:not(.light) #effects .fx-stat {
+        background: rgba(0, 0, 0, .40) !important;
+        color: #e5e7eb !important;
+        border: 1px solid rgba(192, 132, 252, .22) !important;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, .45) !important;
+      }
+
+      body:not(.light) #effects .fx-row p,
+      body:not(.light) #effects .fx-stat .lbl {
+        color: #d1d5db !important;
+      }
+
+      body:not(.light) #effects .fx-title,
+      body:not(.light) #effects h2 {
+        color: #c084fc !important;
+        color: none !important;
+      }
+
+      body:not(.light) #effects .effects-bar {
+        background: rgba(0, 0, 0, .35) !important;
+        border: 1px solid rgba(192, 132, 252, .35) !important;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, .4) !important;
+        backdrop-filter: blur(6px) !important;
+      }
+
+      /* restore the dark edge fades in dark mode */
+      body:not(.light) #effects .effects-bar::before,
+      body:not(.light) #effects .effects-bar::after {
+        display: block !important;
+      }
+
+      /* pills */
+      body:not(.light) #effects .effects-pill {
+        background: rgba(0, 0, 0, .25) !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(250, 204, 21, .28) !important;
+        box-shadow: none !important;
+      }
+
+      body:not(.light) #effects .effects-pill strong {
+        color: #facc15 !important;
+      }
+      .penalty-warning{
+        margin-top: 12px;
+        padding: 10px 16px;
+        border-radius: 12px;
+
+        background: rgba(220, 38, 38, .15);
+        border: 1px solid rgba(220, 38, 38, .6);
+        color: #fecaca;
+
+        font-weight: 700;
+        animation: pulseWarn .6s ease;
+      }
+
+      @keyframes pulseWarn{
+        0%{ transform: scale(.95); opacity: .6; }
+        60%{ transform: scale(1.05); opacity: 1; }
+        100%{ transform: scale(1); }
+      }
+
+      #challenge {
+        scroll-margin-top: 15vh;
+        scroll-margin-bottom: 15vh;
+      }
+
+      /* ====== CLEAN PREMIUM HOVER GLOW (PASTE LAST) ====== */
+      :root{
+        --glow-yellow: rgba(250,204,21,.55);
+        --glow-purple: rgba(192,132,252,.55);
+        --glow-blue:   var(--accent-color);
+        --accent-color: #3b82f6;
+      }
+
+      body:not(.light) {
+        --accent-color: #c183fc;   /* purple for dark mode */
+      }
+
+      /* make pseudo-elements behave correctly on buttons */
+      button{ position:relative; overflow:hidden; }
+
+      /* reusable glow hover class */
+      .glow-hover{
+        position: relative;
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      }
+      .glow-hover::after{
+        content:"";
+        position:absolute;
+        inset:-2px;
+        border-radius: inherit;
+        background: linear-gradient(120deg, var(--glow-yellow), var(--glow-purple), var(--glow-blue));
+        filter: blur(12px);     /* <- glow softness */
+        opacity: 0;
+        z-index: -1;
+        transition: opacity .25s ease, filter .25s ease;
+      }
+      .glow-hover:hover{
+        transform: translateY(-4px);
+        box-shadow:
+          0 18px 55px rgba(0,0,0,.55),
+          0 0 26px rgba(192,132,252,.25);
+      }
+      .glow-hover:hover::after{
+        opacity: .95;
+        filter: blur(16px);
+      }
+
+      /* BIG TEXT GLOW (headings) */
+      .glow-text{
+        color:
+          0 0 10px rgba(192,132,252,.45),
+          0 0 22px var(--accent-color);
+      }
+      .glow-text.gold-text{
+        color:
+          0 0 10px rgba(250,204,21,.55),
+          0 0 22px rgba(250,204,21,.25);
+      }
+
+      /* ====== REDUCE BLUR (your ask) ====== */
+      .effects-bar{ backdrop-filter: blur(3px) !important; } /* was 6px */
+      .fx-card{ backdrop-filter: blur(4px) !important; }     /* was 8px */
+      body.focus-mode::before{ backdrop-filter: blur(3px) !important; } /* was 6px */
+
+          /* ===== BADGE TOOLTIP POPUP ===== */
+
+      .badge-slot{
+        position: relative;
+        cursor: pointer;
+      }
+
+      /* popup bubble */
+      .badge-slot::after{
+        content: attr(data-tip);
+        position: absolute;
+
+        bottom: 120%;          /* above badge */
+        left: 50%;
+        transform: translateX(-50%) scale(.9);
+
+        background: rgba(0,0,0,.85);
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 8px;
+
+        font-size: .75rem;
+        white-space: nowrap;
+
+        opacity: 0;
+        pointer-events: none;
+
+        transition: .25s ease;
+        backdrop-filter: blur(6px);
+      }
+
+      /* arrow */
+      .badge-slot::before{
+        content:"";
+        position:absolute;
+
+        bottom: 105%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        border:6px solid transparent;
+        border-top-color: rgba(0,0,0,.85);
+
+        opacity:0;
+        transition:.25s ease;
+      }
+
+      /* show on hover */
+      .badge-slot:hover::after,
+      .badge-slot:hover::before{
+        opacity:1;
+        transform: translateX(-50%) scale(1);
+      }
+
+      /* ===== BADGE UNLOCK POPUP ===== */
+
+      #badgePopup{
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20000;
+        animation: fadeIn .3s ease;
+      }
+
+      .badge-popup-inner{
+        background: linear-gradient(135deg,#facc15,#f59e0b);
+        padding: 30px 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 0 40px rgba(250,204,21,.7);
+        animation: popBadge .4s ease;
+      }
+
+      .badge-popup-inner h2{
+        margin-bottom: 10px;
+        color:#000;
+      }
+
+      .badge-popup-inner p{
+        color:#000;
+        font-weight:600;
+      }
+
+      @keyframes popBadge{
+        0%{transform:scale(.6)}
+        70%{transform:scale(1.1)}
+        100%{transform:scale(1)}
+      }
+
+      @keyframes fadeIn{
+        from{opacity:0}
+        to{opacity:1}
+      }
+
+      /* ===== TITLE GLOW ANIMATION ===== */
+      @keyframes glowShift {
+        0%   { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
+        25%  { color: 0 0 10px #6f42c1, 0 0 20px #6f42c1; }
+        50%  { color: 0 0 10px #00c9a7, 0 0 20px #00c9a7; }
+        75%  { color: 0 0 10px #ff4da6, 0 0 20px #ff4da6; }
+        100% { color: 0 0 10px #4da6ff, 0 0 20px #4da6ff; }
+      }
+
+      /* ===== MOVING TEXT GRADIENT ===== */
+      .hero-title {
+        font-weight: 700;
+        background: linear-gradient(
+          90deg,
+          #4da6ff,
+          #6f42c1,
+          #00c9a7,
+          #ff4da6,
+          #4da6ff
+        );
+        background-size: 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textWave 5s linear infinite;
+      }
+
+      @keyframes textWave {
+        0% { background-position: 0%; }
+        100% { background-position: 300%; }
+      }
+
+      body.dark-mode .hero-title {
+        background: linear-gradient(
+          90deg,
+          #c183fc,
+          #ffffff,
+          #c183fc
+        );
+        background-size: 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textWave 5s linear infinite;
+      }
+
+      /* ===== CURSOR GLOW ===== */
+      .cursor-glow {
+        position: fixed;
+        width: 150px;
+        height: 150px;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(77,166,255,0.4) 0%, rgba(77,166,255,0.1) 40%, transparent 70%);
+        transform: translate(-50%, -50%);
+        transition: background 0.3s ease;
+        z-index: 9999;
+      }
+
+      body.dark-mode .cursor-glow {
+        background: radial-gradient(circle, rgba(193,131,252,0.4) 0%, rgba(193,131,252,0.1) 40%, transparent 70%);
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <canvas id="particles"></canvas>
+
+    <button id="topBtn">↑</button>
+
+    <div id="pageWipe"></div>
+    <button id="themeToggle" class="theme-toggle">🌙</button>
+
+    <section class="hero">
+      <h1 class="glow-text hero-title">Break Away from <span class = "gold">Digital Addiction</span></h1>
+      <p>An interactive awareness & self-discipline platform.</p>
+      <button onclick="scrollElementFullyIntoView(
+    document.querySelector('.fx-actions'),
+    40
+  )">
+    Start Journey
+  </button>
+
+    </section>
+
+    <section id="info">
+    <div class="card glow-hover">
+
+        <h2 style="text-align:center;">What is Digital Addiction?</h2>
+        <div class="info-grid">
+          <div>
+            <h3 class="gold">Warning Signs</h3>
+            <p>Anxiety, restlessness</p>
+          </div>
+          <div>
+            <h3 class="gold">Effects</h3>
+            <p>Stress, low productivity</p>
+          </div>
+          <div>
+            <h3 class="gold">Solution</h3>
+            <p>Mindful usage</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cursor-glow"></div>
+
+    <section id="effects">
+      <div class="effects-area">
+
+        <h2>Effects</h2>
+
+        <!-- Snap slider bar -->
+        <div class="effects-bar glow-hover" aria-label="Effects slider">
+          <div class="effects-viewport">
+            <div class="effects-track" id="effectsTrack">
+              <div class="effects-slide clone">
+                <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
+                  becomes 1 hour</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft">
+  <span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
+                  switching kills deep work</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft">
+  <span class="effects-icon">🌙</span><strong>Poor sleep</strong> — late
+                  scrolling delays sleep quality</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft">
+  <span class="effects-icon">🧠</span><strong>Mental fatigue</strong> — info
+                  overload makes you feel drained</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">📉</span><strong>Motivation drop</strong> — quick
+                  dopamine makes work feel “boring”</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">😵</span><strong>Anxiety</strong> — nonstop
+                  stimulation increases restlessness</span>
+              </div>
+              <div class="effects-slide">
+                <span class="effects-pill glow-hover glow-soft"><span class="effects-icon">⏳</span><strong>Time loss</strong> — “5 minutes”
+                  becomes 1 hour</span>
+              </div>
+              <div class="effects-slide clone">
+                <span class="effects-pill glow-hover glow-soft">
+  <span class="effects-icon">🎯</span><strong>Low focus</strong> — constant
+                  switching kills deep work</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="effects-dots" id="effectsDots"></div>
+
+        <!-- Cool stuff below -->
+        <div class="effects-grid grid glow-edge">
+          <div class="fx-card glow-hover">
+
+            <h3 class="fx-title">What’s happening in your brain?</h3>
+
+            <ul class="fx-list glow-edge">
+              <li class="fx-row glow-hover glow-soft">
+
+                <span class="fx-dot glow-hover"></span>
+                <div class="list glow-edge">
+                  <h4>Attention gets fragmented</h4>
+                  <p>Your brain adapts to quick rewards, so long tasks feel harder.</p>
+                </div>
+              </li>
+              <li class="fx-row glow-hover">
+                <span class="fx-dot glow-hover"></span>
+                <div>
+                  <h4>Sleep rhythm shifts</h4>
+                  <p>Late scrolling delays melatonin release — you sleep later and worse.</p>
+                </div>
+              </li>
+              <li class="fx-row glow-hover">
+                <span class="fx-dot"></span>
+                <div>
+                  <h4>Stress baseline increases</h4>
+                  <p>Always-on notifications keep your nervous system “alert”.</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="fx-actions">
+              <button class="fx-mini"
+                onclick="scrollElementFullyIntoView(
+                  document.getElementById('challenge'),
+                  30
+                )">
+                Try 1-Hour Detox
+              </button>
+              <button class="fx-mini" onclick="quickTip()">Quick Tip</button>
+              <button class="fx-mini" onclick="goTo1()">More Info</button>
+            </div>
+          </div>
+
+          <div class="fx-stats glow">
+            <div class="fx-card fx-stat glow-hover">
+              <div class="big" id="tipTitle1">⚡ Micro-Reset</div>
+              <div class="lbl" id="tipText1">Turn on grayscale for 10 minutes while studying.</div>
+            </div>
+
+            <div class="fx-card fx-stat glow-hover">
+              <div class="big" id="tipTitle2">🎯 Study Mode</div>
+              <div class="lbl" id="tipText2">Use one playlist only for studying — your brain links it to focus.</div>
+            </div>
+
+            <div class="fx-card fx-stat glow-hover">
+              <div class="big" id="tipTitle3">🌙 Sleep Win</div>
+              <div class="lbl" id="tipText3">No screens 30 minutes before sleep (start small).</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <section id="challenge">
+    <div class="card glow-hover" style="text-align:center;">
+
+        <h2>1-Hour Digital Detox</h2>
+
+        <div class="challenge-top">
+          <button id="acceptBtn" onclick="acceptChallenge()">
+            Accept Challenge
+          </button>
+        
+          <div class="progress-ring">
+            <svg width="170" height="170">
+              <circle class="ring-bg" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
+              <circle class="ring-progress" cx="85" cy="85" r="70" stroke-width="10" fill="transparent"/>
+            </svg>
+            <div id="timerText">60:00</div>
+          </div>
+        </div>
+
+        <div id="statusMsg"></div>
+
+        <div class="controls" id="controls">
+          <button class="stop-btn glow-hover glow-soft" onclick="manualStop()">
+  Stop</button>
+          <button class="glow-hover glow-soft" onclick="resumeFromFocusBlock()">
+  Resume</button>
+          <button class="glow-hover glow-soft" onclick="resetTimer()">
+  Reset</button> <!-- ✅ ADD -->
+        </div>
+
+
+        <div class="stop-box glow-hover">⏸️ Stops: <span id="stopCount">0</span></div>
+
+        <div class="streak-box glow-hover">
+          🔥 Current Streak: <span id="currentStreak">0</span><br>
+          🏆 Best Streak: <span id="bestStreak">0</span><br>
+          <button type="button" id="resetStreakBtn" class="glow-hover">Reset Streak</button>
+        </div>
+
+        <div class="badge-tray glow-hover">
+
+          Badges
+          <div id="badgeTray">
+          
+          
+    <div class="badge-slot" data-badge="30" data-tip="Complete 30 minutes of detox">⏱️</div>
+
+  <div class="badge-slot" data-badge="complete" data-tip="Finish the full 1‑Hour Detox session">✅</div>
+
+  <div class="badge-slot" data-badge="nostop" data-tip="Complete detox with zero stops">💎</div>
+
+  <div class="badge-slot" data-badge="4" data-tip="Complete detox for 4 consecutive times">🔥</div>
+
+  <!-- NEW ONES 👇 -->
+  <div class="badge-slot" data-badge="7" data-tip="Complete detox for 7 consecutive times">🏅</div>
+
+  <div class="badge-slot" data-badge="14" data-tip="Complete detox for 14 consecutive times">👑</div>
+
+        </div>
+        <button id="clearBadgesBtn" class="glow-hover">Clear Badges</button>
+      </div>
+    </section>
+
+    <footer>© Digital Wellness Initiative – PVM</footer>
+    <div id="focusBlock" style="display:none;">
+      <div class="focus-inner">
+        <h1>🚫 FOCUS BROKEN</h1>
+        <p id="focusReason">You left the focus session.</p>
+        <p id="focusPenalty">Penalty applied. Click resume to continue.</p>     
+        <button onclick="resumeTimer()">Resume Focus</button>
+      </div>
+    </div>
+
+    <audio id="alarmSound" preload="auto">
+      <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+    </audio>
+
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      window.addEventListener('load', () => {
+        window.scrollTo(0, 0);
+      });
+
+      // ===== DOM REFERENCES (FIX) =====
+      const acceptBtn = document.getElementById("acceptBtn");
+      const controls = document.getElementById("controls");
+      const timer = document.getElementById("timer");
+      const statusMsg = document.getElementById("statusMsg");
+      const stopCount = document.getElementById("stopCount");
+      const currentStreak = document.getElementById("currentStreak");
+      const bestStreak = document.getElementById("bestStreak");
+      const resetStreakBtn = document.getElementById("resetStreakBtn");
+      const clearBadgesBtn = document.getElementById("clearBadgesBtn");
+      const ring = document.querySelector(".ring-progress");
+      const timerText = document.getElementById("timerText");
+      const radius = 70;
+      const circumference = 2 * Math.PI * radius;
       
-      if (running) return;
+      ring.style.strokeDasharray = circumference;
+      ring.style.strokeDashoffset = 0;
 
-      // hide warning box
-      document.getElementById("focusBlock").style.display = "none";
+      document.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          clickSound.currentTime = 0;
+          clickSound.play();
+        });
+      });
 
-      // re-enter focus mode
-      document.body.classList.add("focus-mode");
+      const track = document.querySelector(".effects-track");
+      const slides = track.children;
+      const realCount = slides.length - 2; // exclude clones
 
-      // 🔒 RETURN TO FULLSCREEN
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
+      let index = 1; // 👈 start on first REAL slide
+      const speed = 1100;
+      const dwell = 3500;
+
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      const dotsWrap = document.getElementById("effectsDots");
+      const realSlides = document.querySelectorAll(".effects-slide:not(.clone)").length;
+
+      // CREATE DOTS
+      for (let i = 0; i < realSlides; i++) {
+        const dot = document.createElement("button");
+        dot.classList.add("effects-dot");
+        dot.addEventListener("click", () => go(i, true));
+        dotsWrap.appendChild(dot);
       }
 
-      // scroll challenge fully into view
-      setTimeout(() => {
-        centerElementInViewport(document.getElementById("challenge"));
-      }, 150);
-
-      focusBroken = false;
-      startTimer();
-    }
-
-
-
-    document.addEventListener("fullscreenchange", () => {
-      const inFocus = document.body.classList.contains("focus-mode");
-      const isFullscreen = document.fullscreenElement;
-
-      if (inFocus && !isFullscreen && !intentionalFullscreenExit) {
-        distractionDetected("Exited fullscreen (ESC)");
+      // SET ACTIVE DOT
+      function setActiveDot() {
+        const dots = document.querySelectorAll(".effects-dot");
+        const realIndex = (index - 1 + realSlides) % realSlides;
+        dots.forEach((d, i) => d.classList.toggle("active", i === realIndex));
       }
 
-      // reset flag after handling
-      intentionalFullscreenExit = false;
-    });
-
-    // Disable right click during focus mode
-    document.addEventListener("contextmenu", function (e) {
-      if (document.body.classList.contains("focus-mode")) {
-        e.preventDefault();
-        distractionDetected("Right click blocked");
+      // MOVE SLIDER
+      function go(i, user = false) {
+        index = i + 1;
+        track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        setActiveDot();
+        if (user) restart();
       }
-    });
 
-    document.addEventListener("keydown", function (e) {
-      if (!document.body.classList.contains("focus-mode")) return;
+      // AUTOPLAY
+      function next() {
+        index++;
+        track.style.transition = `transform ${speed}ms cubic-bezier(.25,.8,.25,1)`;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        setActiveDot();
 
-      const key = e.key.toLowerCase();
-
-      // Block most dangerous combos
-      if (
-        e.ctrlKey ||
-        e.metaKey ||      // Mac Command key
-        key === "f12" ||
-        key === "escape"
-      ) {
-        e.preventDefault();
-        distractionDetected("Shortcut blocked");
+        if (index === realSlides + 1) {
+          setTimeout(() => {
+            track.style.transition = "none";
+            index = 1;
+            track.style.transform = `translateX(-${index * 100}%)`;
+          }, speed);
+        }
       }
-    });
 
-    function updateTimer() {
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
+      let sliderInterval = null;
 
-      timerText.innerText =
-        `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+      function restart() {
+        clearInterval(sliderInterval);
+        sliderInterval = setInterval(next, dwell);
+      }
 
-      const progress = time / totalTime;
+      setActiveDot();
+      sliderInterval = setInterval(next, dwell);
 
-      // EMPTY effect (reverse drain)
-      const offset = circumference * (1 - progress);
+      /* BACK TO TOP */
+      const topBtn = document.getElementById("topBtn");
+      window.addEventListener("scroll", () => {
+        topBtn.classList.toggle("show", window.scrollY > 400);
+      });
 
-      ring.style.strokeDashoffset = offset;
-    }
+      topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-    function updateStreak() {
-      currentStreakVal++;
-      bestStreakVal = Math.max(bestStreakVal, currentStreakVal);
-      SafeStorage.set("currentStreak", currentStreakVal);
-      SafeStorage.set("bestStreak", bestStreakVal);
+      const FILE_KEY = location.pathname.replace(/[^a-zA-Z0-9]/g, "_");
+      const SafeStorage = {
+        set: (k, v) => localStorage.setItem(FILE_KEY + "_" + k, JSON.stringify(v)),
+        get: (k, d) => { const v = localStorage.getItem(FILE_KEY + "_" + k); return v ? JSON.parse(v) : d },
+        remove: (k) => localStorage.removeItem(FILE_KEY + "_" + k)
+      };
+
+      const toggleBtn = document.getElementById("themeToggle");
+      if (SafeStorage.get("theme") === "light") {
+        document.body.classList.add("light");
+        toggleBtn.innerText = "☀️";
+      }
+      toggleBtn.onclick = () => {
+        document.body.classList.toggle("light");
+        SafeStorage.set("theme", document.body.classList.contains("light") ? "light" : "dark");
+        toggleBtn.innerText = document.body.classList.contains("light") ? "☀️" : "🌙";
+      };
+
+      const fixedTotalTime = 3600;
+      let totalTime = 3600;
+      let time = 3600, interval = null, running = false;
+      
+      let stopCounter = 0;
+      let intentionalFullscreenExit = false;
+
+
+      let currentStreakVal = SafeStorage.get("currentStreak", 0);
+      let bestStreakVal = SafeStorage.get("bestStreak", 0);
+      const earnedBadges = SafeStorage.get("badges", []);
+
       currentStreak.innerText = currentStreakVal;
       bestStreak.innerText = bestStreakVal;
-      if ([4, 7, 14].includes(currentStreakVal)) unlockBadge(String(currentStreakVal));
-      if(currentStreakVal > 4){unlockBadgeAlone('4');};
-      if(currentStreakVal > 7){unlockBadgeAlone('7');};
-      if(currentStreakVal > 14){unlockBadgeAlone('14');};
-    }
+      updateTimer(); restoreBadges();
 
-    function unlockBadgeAlone(id){
-      if (earnedBadges.includes(id)) return;
-      earnedBadges.push(id);
-      SafeStorage.set("badges", earnedBadges);
-      restoreBadges();
-    }
+      let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      let currentSource = null;
 
-    function unlockBadge(id) {
-  if (earnedBadges.includes(id)) return;
-
-  earnedBadges.push(id);
-  SafeStorage.set("badges", earnedBadges);
-  restoreBadges();
-
-  showBadgePopup(id);
-}
-
-function showBadgePopup(id){
-
-  const popup = document.getElementById("badgePopup");
-  const title = document.getElementById("badgePopupTitle");
-  const desc = document.getElementById("badgePopupDesc");
-
-  let badgeName = "";
-  let badgeReason = "";
-
-  timeTrue = true;
-  if(id === "30"){
-    badgeName = "⏱️ 30 Minute Master";
-    const confetti = document.getElementById("confettiSound");
-    if (timeTrue && confetti) {
-      confetti.currentTime = 0;
-      confetti.play().catch(() => {});
-      timeTrue = false;
-    };
-    badgeReason = "You completed 30 minutes of detox!";
-  }
-
-  if(id === "complete"){
-    badgeName = "✅ 1-Hour Champion";
-    badgeReason = "You completed the full 1-hour detox session!";
-  }
-
-  if(id === "nostop"){
-    badgeName = "💎 Pure Focus";
-    badgeReason = "You finished the detox without stopping!";
-  }
-
-  if(id === "4"){
-    badgeName = "🔥 4 Day Streak";
-    badgeReason = "You completed 4 sessions consecutively!";
-  }
-
-  if(id === "7"){
-    badgeName = "🏅 7 Day Discipline";
-    badgeReason = "You completed 7 sessions consecutively!";
-  }
-
-  if(id === "14"){
-    badgeName = "👑 14 Day Focus King";
-    badgeReason = "You completed 14 sessions consecutively!";
-  }
-
-  title.innerText = badgeName;
-  desc.innerText = badgeReason;
-
-  popup.style.display = "flex";
-
-  setTimeout(()=>{
-    popup.style.display = "none";
-  },3000);
-}
-
-
-
-    function restoreBadges() {
-      document.querySelectorAll(".badge-slot").forEach(b => {
-        if (earnedBadges.includes(b.dataset.badge)) {
-          b.classList.add("unlocked");
-        } else {
-          b.classList.remove("unlocked"); // 🔥 IMPORTANT
+      async function repeatingFunction(url) {
+        // If a sound is already playing, stop it first
+        if (currentSource) {
+          currentSource.stop();
         }
-      });
-    }
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        distractionDetected("Tab switched");
+
+        // Fetch and decode the audio file
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+        // Create and configure the buffer source
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+
+        source.loopStart = 0.57;
+        source.loopEnd = 2.07;
+        source.loop = true; // This property is key for seamless 1-sec loops
+
+        // Connect to speakers and start
+        source.connect(audioCtx.destination);
+        source.start(0);
+
+        // Store reference so we can stop it later
+        currentSource = source;
       }
-    });
 
-    window.addEventListener("blur", () => {
-      distractionDetected("App switched");
-    });
+      let focusBroken = false;
+      function distractionDetected(reason) {
+        if (!running) return;
 
-    window.addEventListener("beforeunload", e => {
-      if (document.body.classList.contains("focus-mode")) {
-        e.preventDefault();
-        e.returnValue = "";
+        pauseTimer(`🚫 ${reason}`, true);
+        document
+
+        // 🔔 alarm
+        const alarm = document.getElementById("alarmSound");
+
+        focusBroken = true;
+        document.body.classList.remove("focus-mode");
+
+        // 🔴 UPDATE THE EXISTING BLACK WARNING BOX
+        document.getElementById("focusReason").innerText = `🚫 ${reason}`;
+        document.getElementById("focusPenalty").innerText =
+          "⛔ +1 minute penalty applied. Click resume to continue.";
+
+        document.getElementById("focusBlock").style.display = "flex";
+
+        // const stopAlarmBtn = document.getElementById()
+
+        repeatingFunction('https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg')
+
+        // 👁️ ensure challenge is visible
+        setTimeout(() => {
+          centerElementInViewport();
+        }, 100);
       }
-    });
 
-    function scrollElementFullyIntoView(el, padding = 20) {
-      if (!el) return;
 
-      const rect = el.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+      function acceptChallenge() {
+        acceptBtn.style.display = "none";
+        controls.style.display = "block";
 
-      // If element is taller than viewport, center it
-      if (rect.height > viewportHeight) {
+        document.body.classList.add("focus-mode");
+
+        enterFullscreen();
+
+        // 🔧 IMPORTANT: delay for Windows fullscreen layout
+        setTimeout(() => {
+          centerElementInViewport(document.getElementById("challenge"));
+        }, 150);
+
+        startTimer();
+      }
+
+      function centerElementInViewport(el) {
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+
         const absoluteTop = rect.top + window.pageYOffset;
-        const target = absoluteTop - (viewportHeight - rect.height) / 2;
+        const elementCenter = absoluteTop + rect.height / 2;
+        const viewportCenter = window.innerHeight / 2;
+
+        const targetScroll = elementCenter - viewportCenter;
 
         window.scrollTo({
-          top: Math.max(0, target),
-          behavior: "smooth"
-        });
-        return;
-      }
-
-      // Element fits in viewport → ensure fully visible
-      if (rect.top < padding) {
-        window.scrollBy({
-          top: rect.top - padding,
-          behavior: "smooth"
-        });
-      } else if (rect.bottom > viewportHeight - padding) {
-        window.scrollBy({
-          top: rect.bottom - viewportHeight + padding,
+          top: Math.max(0, targetScroll),
           behavior: "smooth"
         });
       }
-    }
 
-    /* 🔄 AUTO REFRESH ADDED (ONLY CHANGE) */
-    clearBadgesBtn.onclick = () => {
-      SafeStorage.remove("badges");
-      earnedBadges.length = 0;
-      restoreBadges();
-    };
+      function enterFullscreen() {
+        const el = document.documentElement;
 
-    resetStreakBtn.onclick = () => {
-      currentStreakVal = 0;
-      SafeStorage.set("currentStreak", 0);
-      currentStreak.innerText = 0;
-    };
-    /* ================= SMOOTH SCROLL + WIPE ================= */
-    function easeInOutCubic(t) {
-      return t < 0.5
-        ? 4 * t * t * t
-        : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
+        if (document.fullscreenElement) return;
 
-    function smoothScrollTo(targetY, duration = 2000) {
-      const startY = window.scrollY;
-      const diff = targetY - startY;
-      let startTime = null;
-
-      function step(ts) {
-        if (!startTime) startTime = ts;
-        const t = Math.min((ts - startTime) / duration, 1);
-        const eased = easeInOutCubic(t);
-        window.scrollTo(0, startY + diff * eased);
-        if (t < 1) requestAnimationFrame(step);
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
       }
-      requestAnimationFrame(step);
-    }
 
-    /* ================= REVEAL OBSERVER ================= */
-    document.querySelectorAll("section").forEach(s => {
-      if (!s.classList.contains("hero")) s.classList.add("reveal");
-    });
+      let timeTrue = true;
+      function startTimer() {
+        if (running) return;
+        running = true;
+        interval = setInterval(() => {
+          time--; updateTimer();
+          if (time+fixedTotalTime/2 <= totalTime){
+            unlockBadge("30");
+          };
+          if (time <= 0) {
+            clearInterval(interval);
+            running = false;
 
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add("in");
+            unlockBadge("complete");
+            if (stopCounter === 0) unlockBadge("nostop");
+            updateStreak();
+
+            statusMsg.innerText = "✅ Challenge completed!";
+
+            const confetti = document.getElementById("confettiSound");
+            if (confetti) {
+              confetti.currentTime = 0;
+              confetti.play().catch(() => {});
+            }
+
+            document.body.classList.remove("focus-mode");
+            document.exitFullscreen?.();
+
+            // wait for layout to settle
+            setTimeout(() => {
+              centerElementInViewport(document.getElementById("challenge"));
+            }, 200);
+
+            time = 3600;
+            stopCounter = 0;
+            stopCount.innerText = "0";
+            updateTimer();
+
+            controls.style.display = "none";
+            acceptBtn.style.display = "inline-block";
+          }
+        }, 1000);
+      }
+
+      function pauseTimer(msg, count = false) {
+        if (!running) return;
+
+        clearInterval(interval);
+        running = false;
+
+        if (count) {
+          stopCounter++;
+          stopCount.innerText = stopCounter;
+
+          // ⛔ penalty: add 60 seconds
+          time += 60;
+          totalTime += 60;
+        }
+
+        statusMsg.innerText = msg + " (+1 min penalty)";
+      }
+
+      function resumeFromFocusBlock() {
+        // ✅ this function is the USER GESTURE
+        enterFullscreen();
+
+        // now resume logic
+        resumeTimer();
+      }
+
+      function manualStop() {
+        intentionalFullscreenExit = true;
+        distractionDetected("Stopped manually");
+        document.exitFullscreen?.();
+      }
+
+      function resetTimer() {
+        intentionalFullscreenExit = true;
+        totalTime = 3600;
+
+        clearInterval(interval);
+        running = false;
+        time = 3600;
+        stopCounter = 0;
+
+        stopCount.innerText = "0";
+        statusMsg.innerText = "";
+        updateTimer();
+
+        // exit focus mode + fullscreen
+        document.body.classList.remove("focus-mode");
+        document.exitFullscreen?.();
+
+        // ✅ ALWAYS re-center challenge (even outside focus mode)
+        setTimeout(() => {
+          centerElementInViewport(document.getElementById("challenge"));
+        }, 80);
+      }
+
+
+      function resumeTimer() {
+        if (currentSource) {
+          currentSource.stop();
+          currentSource = null;
+        }
+        
+        if (running) return;
+
+        // hide warning box
+        document.getElementById("focusBlock").style.display = "none";
+
+        // re-enter focus mode
+        document.body.classList.add("focus-mode");
+
+        // 🔒 RETURN TO FULLSCREEN
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+
+        // scroll challenge fully into view
+        setTimeout(() => {
+          centerElementInViewport(document.getElementById("challenge"));
+        }, 150);
+
+        focusBroken = false;
+        startTimer();
+      }
+
+
+
+      document.addEventListener("fullscreenchange", () => {
+        const inFocus = document.body.classList.contains("focus-mode");
+        const isFullscreen = document.fullscreenElement;
+
+        if (inFocus && !isFullscreen && !intentionalFullscreenExit) {
+          distractionDetected("Exited fullscreen (ESC)");
+        }
+
+        // reset flag after handling
+        intentionalFullscreenExit = false;
       });
-    }, { threshold: 0.15 });
 
-    document.querySelectorAll("section.reveal")
-      .forEach(s => revealObserver.observe(s));
+      // Disable right click during focus mode
+      document.addEventListener("contextmenu", function (e) {
+        if (document.body.classList.contains("focus-mode")) {
+          e.preventDefault();
+          distractionDetected("Right click blocked");
+        }
+      });
 
-    /* ================= QUICK TIP (3 DIFFERENT BOXES) ================= */
-    function randPick(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+      document.addEventListener("keydown", function (e) {
+        if (!document.body.classList.contains("focus-mode")) return;
+
+        const key = e.key.toLowerCase();
+
+        // Block most dangerous combos
+        if (
+          e.ctrlKey ||
+          e.metaKey ||      // Mac Command key
+          key === "f12" ||
+          key === "escape"
+        ) {
+          e.preventDefault();
+          distractionDetected("Shortcut blocked");
+        }
+      });
+
+      function updateTimer() {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+
+        timerText.innerText =
+          `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+
+        const progress = time / totalTime;
+
+        // EMPTY effect (reverse drain)
+        const offset = circumference * (1 - progress);
+
+        ring.style.strokeDashoffset = offset;
+      }
+
+      function updateStreak() {
+        currentStreakVal++;
+        bestStreakVal = Math.max(bestStreakVal, currentStreakVal);
+        SafeStorage.set("currentStreak", currentStreakVal);
+        SafeStorage.set("bestStreak", bestStreakVal);
+        currentStreak.innerText = currentStreakVal;
+        bestStreak.innerText = bestStreakVal;
+        if ([4, 7, 14].includes(currentStreakVal)) unlockBadge(String(currentStreakVal));
+        if(currentStreakVal > 4){unlockBadgeAlone('4');};
+        if(currentStreakVal > 7){unlockBadgeAlone('7');};
+        if(currentStreakVal > 14){unlockBadgeAlone('14');};
+      }
+
+      function unlockBadgeAlone(id){
+        if (earnedBadges.includes(id)) return;
+        earnedBadges.push(id);
+        SafeStorage.set("badges", earnedBadges);
+        restoreBadges();
+      }
+
+      function unlockBadge(id) {
+    if (earnedBadges.includes(id)) return;
+
+    earnedBadges.push(id);
+    SafeStorage.set("badges", earnedBadges);
+    restoreBadges();
+
+    showBadgePopup(id);
+  }
+
+  function showBadgePopup(id){
+
+    const popup = document.getElementById("badgePopup");
+    const title = document.getElementById("badgePopupTitle");
+    const desc = document.getElementById("badgePopupDesc");
+
+    let badgeName = "";
+    let badgeReason = "";
+
+    timeTrue = true;
+    if(id === "30"){
+      badgeName = "⏱️ 30 Minute Master";
+      const confetti = document.getElementById("confettiSound");
+      if (timeTrue && confetti) {
+        confetti.currentTime = 0;
+        confetti.play().catch(() => {});
+        timeTrue = false;
+      };
+      badgeReason = "You completed 30 minutes of detox!";
     }
 
-    function quickTip() {
-      const tipsBox1 = [
-        { t: "⚡ Micro-Reset", d: "Put your phone 2 meters away while you work. Out of reach = less reflex scrolling." },
-        { t: "🧱 Friction trick", d: "Log out of your most addictive app. That extra step reduces impulse opens." },
-        { t: "🔕 Notification diet", d: "Turn off non-essential notifications for 24 hours. Keep only calls/messages." },
-      ];
-
-      const tipsBox2 = [
-        { t: "🎧 Focus hack", d: "Use one playlist only for studying. Your brain associates it with focus." },
-        { t: "🗓️ Time block", d: "Study in 25-minute blocks, then 5 minutes break (Pomodoro)." },
-        { t: "📌 One-tab rule", d: "Keep only one study tab open. Less switching = more focus." },
-      ];
-
-      const tipsBox3 = [
-        { t: "🌙 Sleep win", d: "Dim brightness to 20% after 8pm (or enable night light)." },
-        { t: "📵 Night rule", d: "Keep your phone outside the bed area. Charge it away from you." },
-        { t: "😴 Wind-down", d: "Do 3 minutes of deep breathing before sleep. It reduces late scrolling urges." },
-      ];
-
-      const a = randPick(tipsBox1);
-      const b = randPick(tipsBox2);
-      const c = randPick(tipsBox3);
-
-      const t1 = document.getElementById("tipTitle1");
-      const d1 = document.getElementById("tipText1");
-      const t2 = document.getElementById("tipTitle2");
-      const d2 = document.getElementById("tipText2");
-      const t3 = document.getElementById("tipTitle3");
-      const d3 = document.getElementById("tipText3");
-      
-      if (t1 && d1) { t1.textContent = a.t; d1.textContent = a.d; }
-      if (t2 && d2) { t2.textContent = b.t; d2.textContent = b.d; }
-      if (t3 && d3) { t3.textContent = c.t; d3.textContent = c.d; }
+    if(id === "complete"){
+      badgeName = "✅ 1-Hour Champion";
+      badgeReason = "You completed the full 1-hour detox session!";
     }
 
-    function goTo1() {
-      const sound = document.getElementById("clickSound");
-      sound.currentTime = 0;
-      sound.play().catch(()=>{});
-
-      setTimeout(() => {
-        window.location.href = "https://aathipro-web.github.io/info/";
-      }, 180);   // small delay so sound plays
+    if(id === "nostop"){
+      badgeName = "💎 Pure Focus";
+      badgeReason = "You finished the detox without stopping!";
     }
 
-    const glow = document.querySelector(".cursor-glow");
+    if(id === "4"){
+      badgeName = "🔥 4 Day Streak";
+      badgeReason = "You completed 4 sessions consecutively!";
+    }
 
-    document.addEventListener("mousemove", (e) => {
-      glow.style.left = e.clientX + "px";
-      glow.style.top = e.clientY + "px";
-    });
+    if(id === "7"){
+      badgeName = "🏅 7 Day Discipline";
+      badgeReason = "You completed 7 sessions consecutively!";
+    }
 
-  </script>
+    if(id === "14"){
+      badgeName = "👑 14 Day Focus King";
+      badgeReason = "You completed 14 sessions consecutively!";
+    }
 
-<audio id="clickSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
-</audio>
+    title.innerText = badgeName;
+    desc.innerText = badgeReason;
 
-<audio id="confettiSound" preload="auto">
-  <source src="https://files.catbox.moe/oijr6r.mp3" type="audio/mpeg">
-</audio>
+    popup.style.display = "flex";
 
-<!-- BADGE POPUP -->
-<div id="badgePopup" style="display:none;">
-  <div class="badge-popup-inner">
-    <h2 id="badgePopupTitle">🏆 Badge Unlocked!</h2>
-    <p id="badgePopupDesc"></p>
+    setTimeout(()=>{
+      popup.style.display = "none";
+    },3000);
+  }
+
+
+
+      function restoreBadges() {
+        document.querySelectorAll(".badge-slot").forEach(b => {
+          if (earnedBadges.includes(b.dataset.badge)) {
+            b.classList.add("unlocked");
+          } else {
+            b.classList.remove("unlocked"); // 🔥 IMPORTANT
+          }
+        });
+      }
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          distractionDetected("Tab switched");
+        }
+      });
+
+      window.addEventListener("blur", () => {
+        distractionDetected("App switched");
+      });
+
+      window.addEventListener("beforeunload", e => {
+        if (document.body.classList.contains("focus-mode")) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+
+      function scrollElementFullyIntoView(el, padding = 20) {
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // If element is taller than viewport, center it
+        if (rect.height > viewportHeight) {
+          const absoluteTop = rect.top + window.pageYOffset;
+          const target = absoluteTop - (viewportHeight - rect.height) / 2;
+
+          window.scrollTo({
+            top: Math.max(0, target),
+            behavior: "smooth"
+          });
+          return;
+        }
+
+        // Element fits in viewport → ensure fully visible
+        if (rect.top < padding) {
+          window.scrollBy({
+            top: rect.top - padding,
+            behavior: "smooth"
+          });
+        } else if (rect.bottom > viewportHeight - padding) {
+          window.scrollBy({
+            top: rect.bottom - viewportHeight + padding,
+            behavior: "smooth"
+          });
+        }
+      }
+
+      /* 🔄 AUTO REFRESH ADDED (ONLY CHANGE) */
+      clearBadgesBtn.onclick = () => {
+        SafeStorage.remove("badges");
+        earnedBadges.length = 0;
+        restoreBadges();
+      };
+
+      resetStreakBtn.onclick = () => {
+        currentStreakVal = 0;
+        SafeStorage.set("currentStreak", 0);
+        currentStreak.innerText = 0;
+      };
+      /* ================= SMOOTH SCROLL + WIPE ================= */
+      function easeInOutCubic(t) {
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function smoothScrollTo(targetY, duration = 2000) {
+        const startY = window.scrollY;
+        const diff = targetY - startY;
+        let startTime = null;
+
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const t = Math.min((ts - startTime) / duration, 1);
+          const eased = easeInOutCubic(t);
+          window.scrollTo(0, startY + diff * eased);
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      /* ================= REVEAL OBSERVER ================= */
+      document.querySelectorAll("section").forEach(s => {
+        if (!s.classList.contains("hero")) s.classList.add("reveal");
+      });
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add("in");
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll("section.reveal")
+        .forEach(s => revealObserver.observe(s));
+
+      /* ================= QUICK TIP (3 DIFFERENT BOXES) ================= */
+      function randPick(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      function quickTip() {
+        const tipsBox1 = [
+          { t: "⚡ Micro-Reset", d: "Put your phone 2 meters away while you work. Out of reach = less reflex scrolling." },
+          { t: "🧱 Friction trick", d: "Log out of your most addictive app. That extra step reduces impulse opens." },
+          { t: "🔕 Notification diet", d: "Turn off non-essential notifications for 24 hours. Keep only calls/messages." },
+        ];
+
+        const tipsBox2 = [
+          { t: "🎧 Focus hack", d: "Use one playlist only for studying. Your brain associates it with focus." },
+          { t: "🗓️ Time block", d: "Study in 25-minute blocks, then 5 minutes break (Pomodoro)." },
+          { t: "📌 One-tab rule", d: "Keep only one study tab open. Less switching = more focus." },
+        ];
+
+        const tipsBox3 = [
+          { t: "🌙 Sleep win", d: "Dim brightness to 20% after 8pm (or enable night light)." },
+          { t: "📵 Night rule", d: "Keep your phone outside the bed area. Charge it away from you." },
+          { t: "😴 Wind-down", d: "Do 3 minutes of deep breathing before sleep. It reduces late scrolling urges." },
+        ];
+
+        const a = randPick(tipsBox1);
+        const b = randPick(tipsBox2);
+        const c = randPick(tipsBox3);
+
+        const t1 = document.getElementById("tipTitle1");
+        const d1 = document.getElementById("tipText1");
+        const t2 = document.getElementById("tipTitle2");
+        const d2 = document.getElementById("tipText2");
+        const t3 = document.getElementById("tipTitle3");
+        const d3 = document.getElementById("tipText3");
+        
+        if (t1 && d1) { t1.textContent = a.t; d1.textContent = a.d; }
+        if (t2 && d2) { t2.textContent = b.t; d2.textContent = b.d; }
+        if (t3 && d3) { t3.textContent = c.t; d3.textContent = c.d; }
+      }
+
+      function goTo1() {
+        const sound = document.getElementById("clickSound");
+        sound.currentTime = 0;
+        sound.play().catch(()=>{});
+
+        setTimeout(() => {
+          window.location.href = "https://aathipro-web.github.io/info/";
+        }, 180);   // small delay so sound plays
+      }
+
+      const glow = document.querySelector(".cursor-glow");
+
+      document.addEventListener("mousemove", (e) => {
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
+      });
+
+      const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<60;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2 + .5,
+    dx: (Math.random()-.5)*.2,
+    dy: (Math.random()-.5)*.2
+  });
+}
+
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "rgba(192,132,252,.6)";
+
+  particles.forEach(p=>{
+    p.x+=p.dx;
+    p.y+=p.dy;
+
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+    </script>
+
+  <audio id="clickSound" preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="confettiSound" preload="auto">
+    <source src="https://files.catbox.moe/oijr6r.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- BADGE POPUP -->
+  <div id="badgePopup" style="display:none;">
+    <div class="badge-popup-inner">
+      <h2 id="badgePopupTitle">🏆 Badge Unlocked!</h2>
+      <p id="badgePopupDesc"></p>
+    </div>
   </div>
-</div>
 
-</body>
 
-</html>
+  </body>
+
+  </html>
